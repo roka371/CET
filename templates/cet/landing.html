@@ -1,0 +1,442 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--load stylesheets, favicon, and scripts-->
+	<link rel="icon" href="{{STATIC_URL}}favicon.ico" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/style_landing.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}/jquery-1.8.3.min.js" charset="utf-8"></script>
+    <script src="{{STATIC_URL}}/jquery-ui-1.9.2.min.js"></script>
+    <script src="{{STATIC_URL}}/jquery_masonry_min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/script_landing.js" charset="utf-8"></script>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CET 2.0</title>
+</head>
+<body>
+	<div id="data">
+		<div id="username">[[USERNAME]]</div>
+		<div id="csrf">{% csrf_token %}</div>
+	</div>
+	<div id="container">
+		<div id="modal">
+			<div id="modal_overlay"></div>
+			<div id="video_modal">
+				<div id="video_modal_theater"></div>
+				<div id="video_modal_close">Close</div>
+			</div>
+			<div id="auth_box" class="modal_box">
+				<div class="modal_box_header">Please Login to continue.</div>
+				<div class="modal_box_contents">
+					<div id="auth_box_login">Login</div>
+					<div id="auth_box_signup">Signup</div>
+				</div>
+				<div class="modal_box_footer" style="height: 55px;">
+					<div id="auth_box_cancel">Cancel</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div id="login_modal_box" class="modal_box">
+				<div class="modal_box_header">Login</div>
+				<div class="modal_box_contents">
+					<div id="login_form_email" class="modal_input_container"><input class="modal_input" type="text" placeholder="Email" /></div>
+					<div id="login_form_password" class="modal_input_container" style="margin-top: 15px;"><input class="modal_input" type="password" placeholder="Password" /></div>
+				</div>
+				<div class="modal_box_footer">
+					<div class="button modal_box_footer_next" id="login_modal_box_login">Login</div>
+					<div class="button modal_box_footer_cancel" id="login_modal_box_cancel">Cancel</div>
+				</div>
+			</div>
+			<div id="signup_modal_box" class="modal_box">
+				<div class="modal_box_header">Signup for CET</div>
+				<div id="signup_modal_box_contents_container">
+					<div id="signup_modal_box_contents">
+						<div class="signup_modal_box_contents_section">
+							<div id="signup_form_name">
+								<div id="signup_form_firstname"><input class="modal_input" type="text" placeholder="First Name" /></div>
+								<div id="signup_form_lastname"><input class="modal_input" type="text" placeholder="Last Name" /></div>
+							</div>
+							<div id="signup_form_email"><input class="modal_input" type="text" placeholder="Email" /></div>
+							<div id="signup_form_password"><input class="modal_input" type="password" placeholder="Password" /></div>
+							<div id="signup_form_confirm"><input class="modal_input" type="password" placeholder="Confirm Password" /></div>
+						</div>
+						<div class="signup_modal_box_contents_section">
+							<div class="signup_form_usertype_box" style="background-color: #4989DA;" data-usertype="student">
+								<div class="signup_form_usertype_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/student.svg" /></div>
+								<div class="signup_form_usertype_title">Student</div>
+								<div class="signup_form_usertype_label">For UC Berkeley students pursuing or interested in entrepreneurship.</div>
+								<div class="signup_form_usertype_check">
+									<div class="signup_form_usertype_check_icon">
+										<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+									</div>
+								</div>
+							</div>
+							<div class="signup_form_usertype_box" style="background-color: #DA4F49;" data-usertype="industry">
+								<div class="signup_form_usertype_icon" style="padding-top: 20px;"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/industry.svg" /></div>
+								<div class="signup_form_usertype_title" style="padding-top: 8px;">Industry</div>
+								<div class="signup_form_usertype_label">For industry-personnel seeking investment, recruitment, or partnership.</div>
+								<div class="signup_form_usertype_check signup_form_usertype_selected">
+									<div class="signup_form_usertype_check_icon">
+										<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+									</div>
+								</div>
+							</div>
+							<div class="signup_form_usertype_box" style="background-color: #5BB75C; margin-right: 0px;" data-usertype="mentor">
+								<div class="signup_form_usertype_icon" style="width: 45px; padding-top: 15px;"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/mentor.svg" /></div>
+								<div class="signup_form_usertype_title" style="padding-top: 5px;">Mentors</div>
+								<div class="signup_form_usertype_label">For people with experience in entrepreneurship who wants to guide students in their venture.</div>
+								<div class="signup_form_usertype_check signup_form_usertype_selected">
+									<div class="signup_form_usertype_check_icon">
+										<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal_box_footer">
+					<div class="button modal_box_footer_next" id="signup_modal_box_next" data-state="1">Next</div>
+					<div class="button modal_box_footer_cancel" id="signup_modal_box_cancel">Cancel</div>
+				</div>
+			</div>
+		</div>	
+		<div id="landing_cover">
+			<div id="landing_cover_overlay"></div>
+			<div id="landing_cover_background">
+				<div id="landing_cover_bgalpha"></div>
+				<img class="img_scaled_wh" src="{{STATIC_URL}}assets/covers/skydeck.jpg" />
+			</div>
+			<div id="landing_cover_logo">
+				<div id="landing_cover_logo_content">
+					<div id="landing_cover_logo_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/cet_logo.png" /></div>
+					<div id="landing_cover_logo_name">CET</div>
+					<div id="landing_cover_logo_affiliation">Berkeley</div>
+					<div id="landing_cover_logo_alpha">
+						<div id="landing_cover_logo_alpha_arrow"></div>
+						<div id="landing_cover_logo_alpha_caption">Alpha</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div id="landing_cover_logo_caption">Center for Entrepreneurship and Technology</div>
+			</div>
+			<div id="landing_cover_nav">
+				<a href="/about/"><div class="landing_cover_nav_item">About</div></a>
+				<a href="/curriculum/"><div class="landing_cover_nav_item">Curriculum</div></a>
+				<a href="/global/"><div class="landing_cover_nav_item">Global Programs</div></a>
+				<a href="/apply/"><div class="landing_cover_nav_item">Apply for CET Certificate</div></a>
+			</div>
+			<div id="landing_cover_content">
+				<div id="landing_hero">Innovate.<br>Productize.<br>Commercialize.</div>
+				<div id="landing_video">
+					<div id="landing_video_wrapper">
+						<img class="img_scaled" src="{{STATIC_URL}}assets/icons/play.svg" />Play Video
+					</div>
+				</div>
+				<div id="landing_toolbox">
+				{% if not u_logged_in.is_authenticated %}
+					<div id="landing_login">
+						<div class="landing_toolbox_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/login.svg" /></div>
+						<div class="landing_toolbox_text">Login</div>
+					</div>
+					<div id="landing_signup">
+						<div class="landing_toolbox_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/signup.svg" /></div>
+						<div class="landing_toolbox_text">Signup</div>
+					</div>
+				{% else %}
+					<a href="/feed/"><div id="landing_gateway_feed">
+						<div class="landing_toolbox_icon" style="left: 50px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_light.svg" /></div>
+						<div class="landing_toolbox_text">Exchange</div>
+					</div></a>
+					<a href="/connect/"><div id="landing_gateway_connect">
+						<div class="landing_toolbox_icon" style="left: 45px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/user.svg" /></div>
+						<div class="landing_toolbox_text">The Players</div>
+					</div></a>
+				{% endif %}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div id="landing_guide_container">
+				<div id="landing_guide">
+					<div id="landing_guide_text">Scroll down to learn more.</div>
+					<div id="landing_guide_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/arrow_down_alt.svg" /></div>
+				</div>
+			</div>
+			<div id="landing_affiliation">
+				<div id="landing_affiliation_left">
+					<a href="http://funginstitute.berkeley.edu/" target="_blank"><div class="landing_affiliation_item" style="margin-left: 120px;">Fung Institute of Technology</div></a>
+					<a href="http://skydeck.berkeley.edu/" target="_blank"><div class="landing_affiliation_item" style="margin: 0px;">SkyDeck</div></a>
+					<div class="clear"></div>
+				</div>
+				<div id="landing_affiliation_right">
+					<a href="http://entrepreneurship.berkeley.edu/" target="_blank"><div class="landing_affiliation_item">Lester Center of Entrepreneurship</div></a>
+					<a href="http://www.berkeley.edu/" target="_blank"><div class="landing_affiliation_item">UC Berkeley</div></a>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="landing_description">
+			<div id="landing_description_content">
+				<div id="landing_description_logo"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/cet_logo.png" /></div>
+				<div id="landing_description_title">Welcome to CET.</div>
+				<div id="landing_description_detail">The Center for Entrepreneurship & Technology (CET) is an academic center within UC Berkeley College of Engineering. Established in 2005, CET's mission has been to equip engineers and scientists with the skills to innovate, productize, and commercialize technology in the global economy. This virtual center will allow student entrepreneurs in Berkeley and the industry and mentors in the Bay Area to connect with each other, creating a synergy effect that boost the entrepreneurial atmosphere at Berkeley.</div>
+			</div>
+		</div>
+		<div id="landing_double_container">
+			<div id="landing_double">
+				<div class="landing_double_item" id="landing_double_berkeley">
+					<div class="landing_double_item_hero">
+						<div class="landing_double_item_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/cetberkeley.jpg" /></div>
+						<div class="landing_double_item_overlay"></div>
+						<div class="landing_double_item_caption_container"><div class="landing_double_item_caption">CET at Berkeley</div></div>
+					</div>
+					<div class="landing_double_item_content" style="background: #de6868;">
+						<div class="landing_double_item_description">The CET helps engineers become more entrepreneurial through courses, research and access to a rich industry ecosystem.  At its core, the CET offers a unique curriculum that blends the University of California’s rigorous academics with practical instruction in commercializing new technologies. Our department is complemented by a hand-crafted online community space.</div>
+						<div class="landing_double_item_link">See our curriculum</div>
+					</div>
+				</div>
+				<div class="landing_double_item" id="landing_double_web">
+					<div class="landing_double_item_hero">
+						<div class="landing_double_item_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/cetweb.jpg" /></div>
+						<div class="landing_double_item_overlay"></div>
+						<div class="landing_double_item_caption_container"><div class="landing_double_item_caption">CET on the Web</div></div>
+					</div>
+					<div class="landing_double_item_content" style="background: #709b8a;">
+						<div class="landing_double_item_description">The CET has built one of the world’s first curated and moderated social networks for University entrepreneurs. The “Virtual CET” is tailored to the needs of student startups.</div>
+						{% if not u_logged_in.is_authenticated %}
+							<div class="landing_double_item_link">Join CET's network</div>
+						{% else %}
+							<a href="/feed/"><div class="landing_double_item_link">Go to your Feed</div></a>
+						{% endif %}
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="landing_virtual">
+			<div id="landing_virtual_content">
+				<div id="landing_virtual_hero">CET is beyond Berkeley.</div>
+				<div id="landing_virtual_caption">CET's latest website acts a virtual entrepreneurship center that helps students connect with industry and mentors, as well as stay up to date with entrepreneurial activities across the Bay Area.</div>
+				<div id="landing_virtual_nav">
+					<div id="landing_virtual_nav_feed" class="landing_virtual_nav_item" style="color: #4989DA; border-bottom-color: #4989DA;">Exchange</div>
+					<div id="landing_virtual_nav_connect" class="landing_virtual_nav_item">The Players</div>
+					<div id="landing_virtual_nav_profile" class="landing_virtual_nav_item">Profiles</div>
+					<div class="clear"></div>
+				</div>
+				<div id="landing_virtual_demo">
+					<div id="landing_virtual_demo_device"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/landing_demo.png" /></div>
+					<div id="landing_virtual_demo_carousel_container">
+						<div id="landing_virtual_demo_carousel">
+							<div class="landing_virtual_demo_carousel_slide"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/landing_demo_feed.jpg" /></div>
+							<div class="landing_virtual_demo_carousel_slide"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/landing_demo_connect.jpg" /></div>
+							<div class="landing_virtual_demo_carousel_slide"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/landing_demo_profile.jpg" /></div>
+						</div>
+					</div>
+				</div>
+				<div id="landing_virtual_description">
+					<div class="landing_virtual_description_section">
+						<div class="landing_virtual_description_section_row">
+							<div class="landing_virtual_description_section_item">
+								<div class="landing_virtual_description_section_item_icon" style="background: #9B59B6;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_event.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Events</div>
+								<div class="landing_virtual_description_section_item_caption">Catch up on the latest events, including panel discussions by experts, stimulating symposiums, recruiting opportunities, and the CET alumni reunions.</div>
+							</div>
+							<div class="landing_virtual_description_section_item">
+								<div class="landing_virtual_description_section_item_icon" style="background: #16A085;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_team.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Team Building</div>
+								<div class="landing_virtual_description_section_item_caption">Use the virtual center to recruit co-founders and employees in developing your new venture.</div>
+							</div>
+							<div class="landing_virtual_description_section_item" style="margin: 0px;">
+								<div class="landing_virtual_description_section_item_icon" style="background: #E67E22;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_startup.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Startup Posting</div>
+								<div class="landing_virtual_description_section_item_caption">Have a startup or an idea? Share what you’re working on, ask questions, and tap into the knowledge of the UC Berkeley community.</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="landing_virtual_description_section_row">
+							<div class="landing_virtual_description_section_item">
+								<div class="landing_virtual_description_section_item_icon" style="background: #5BB75C;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_mentor.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Mentoring</div>
+								<div class="landing_virtual_description_section_item_caption">A community of world-class mentors and advisors (from around the world) are available at your fingertips.</div>
+							</div>
+							<div class="landing_virtual_description_section_item">
+								<div class="landing_virtual_description_section_item_icon" style="background: #DA4F49;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_investment.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Fundraising</div>
+								<div class="landing_virtual_description_section_item_caption">Whether you’re just starting out or well on your way, the CET can help you network and provide guidance in financing your venture.</div>
+							</div>
+							<div class="landing_virtual_description_section_item" style="margin: 0px;">
+								<div class="landing_virtual_description_section_item_icon" style="background: #4989DA;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_text.svg" /></div>
+								<div class="landing_virtual_description_section_item_title">Free Posts</div>
+								<div class="landing_virtual_description_section_item_caption">Have any interesting project or a question about the startup process? Don’t worry--we invite you to pose new topic questions that don’t necessarily fit a category.</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="landing_stakeholders">
+			<div id="landing_stakeholders_content">
+				<div id="landing_stakeholders_hero">CET is for <i>you.</i></div>
+				<div id="landing_stakeholders_caption">The CET is a rich and engaging community, built to support a diverse network created by our world-class students, business leaders, and experienced mentors. Come sign up, learn, contribute and shape the discussion.</div>
+				<div id="landing_stakeholders_item_container">
+					<div class="landing_stakeholders_item">
+						<div class="landing_stakeholders_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/student.svg" /></div>
+						<div class="landing_stakeholders_item_title">Students</div>
+						<div class="landing_stakeholders_item_description">From undergrad to postdoc, we invite the UC Berkeley community to join the conversation and discover something great--whether it’s a job opportunity or a refreshing insight into an industry.</div>
+					</div>
+					<div class="landing_stakeholders_item">
+						<div class="landing_stakeholders_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/industry.svg" style="margin-top: 6px; margin-left: 1px;" /></div>
+						<div class="landing_stakeholders_item_title">Industry</div>
+						<div class="landing_stakeholders_item_description">The CET welcomes business leaders for recruiting, mentorship, and academic research. Our network can help you unlock a wealth of young and talented minds and provide you with a way to contribute to the innovation ecosystem.</div>
+					</div>
+					<div class="landing_stakeholders_item" style="margin: 0px;">
+						<div class="landing_stakeholders_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/mentor.svg" /></div>
+						<div class="landing_stakeholders_item_title">Mentors</div>
+						<div class="landing_stakeholders_item_description">The CET is always open to seasoned veterans looking to mentor the next generation of entrepreneurs.  If you have some spare time, it’s a great way to “pay it forward” and to be part of a world-class network.</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div id="landing_testimonial">
+			<div id="landing_testimonial_content">
+				<div id="landing_testimonial_hero">Here's what people think</div>
+				<div id="landing_testimonial_masonry">
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"The CET is a true epitome of Lorem Ipsum. I mean, really. When something is Lorem Ipsum, it's that Lorem Ipsum. You know what's even better? It's so Shawn Park. I think that summarizes everything."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"The purpose of design is to bring order to complexity."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"9 out of 10, things will NOT go along with your expectations. Be ready for anomalies. Embrace them and exploit them."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"One committed member is better than a hundred reluctant geniuses."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"It's really hard to design products by focus groups. A lot of times, people don't know what they want until you show it to them."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"When god gives you an opportunity, seize that opportunity, not to just slip by only to regret it later."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"Sometimes it's better to not to plan things out; let your intuition drive you."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"Your time is limited, so don’t waste it living someone else’s life."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="landing_testimonial_item">
+						<div class="landing_testimonial_message">"You never know whether it's a head or a tail until you toss the coin."</div>
+						<div class="landing_testimonial_footer">
+							<div class="landing_testimonial_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/shawn.jpg" /></div>
+							<div class="landing_testimonial_info">
+								<div class="landing_testimonial_name">Shawn Park</div>
+								<div class="landing_testimonial_position">UI Designer & Founder of Ego</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% if not u_logged_in.is_authenticated %}
+			<div id="landing_join">
+				<div id="landing_join_content">
+					<div id="landing_join_hero">Join Our Network.</div>
+					<div id="landing_join_action">Sign up for CET</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		{% endif %}
+		<div id="landing_connect">
+			<div id="landing_connect_content">
+				<div id="landing_connect_hero">Connect with Us.</div>
+				<div id="landing_connect_social">
+					<div class="landing_connect_social_item">
+						<div class="landing_connect_social_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/facebook.svg" /></div>
+						<div class="landing_connect_social_item_caption">Like on Facebook</div>
+					</div>
+					<div class="landing_connect_social_item">
+						<div class="landing_connect_social_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/twitter.svg" /></div>
+						<div class="landing_connect_social_item_caption">Follow on Twitter</div>
+					</div>
+					<div class="landing_connect_social_item">
+						<div class="landing_connect_social_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/youtube.svg" /></div>
+						<div class="landing_connect_social_item_caption">Watch on YouTube</div>
+					</div>
+					<div class="landing_connect_social_item">
+						<div class="landing_connect_social_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/email.svg" /></div>
+						<div class="landing_connect_social_item_caption">Send an Email</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div id="landing_footer">Made with lots of <img class="img_scaled" src="{{STATIC_URL}}assets/icons/coffee.svg" /> and <img class="img_scaled" src="{{STATIC_URL}}assets/icons/love.svg" /> at <b>CAL.</b></div>
+	</div>
+</body>
+</html>

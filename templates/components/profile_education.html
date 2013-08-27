@@ -1,0 +1,92 @@
+<!--
+
+Component for Dashboard Profile - Education Box.
+Takes in School, Major, Graduation Year, Description, and Course List (an array) as parameters.
+By default (first-time generated), all of the values are "undefined" and an empty array. 
+
+-->
+
+<div class="dashboard_profile_box" {% if is_new %} data-id="0" {% else %} data-id="{{education.id}}" {% endif %} user-id="{{user.id}}">
+	<!--
+		Code for the editor sheet of the education (Don't show if the user isn't looksing at their own profile) 
+	-->
+	{% if u_logged_in.id == user.id %}
+		<div class="dashboard_profile_edit button">
+			<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/edit.svg" />
+		</div>
+		<div class="dashboard_profile_editor" {% if is_new %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+			<div class="dashboard_profile_editor_cover">
+				<input class="dashboard_profile_editor_cover_upload" type="file" />
+				{% if is_new %}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{% elif education.get_education_picture_url %}
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: block;" src= "{{education.get_education_picture_url}}" /></div>
+				{%else%}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{%endif%}
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_school">
+				<div class="dashboard_profile_editor_item_label">School</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{education.education_school}}" value="{{education.education_school}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_major">
+				<div class="dashboard_profile_editor_item_label">Major</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{education.education_major}}" value="{{education.education_major}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_gradyear">
+				<div class="dashboard_profile_editor_item_label">Graduation Year</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" {% if education.education_gradyear %} data-original="{{education.education_gradyear}}" value="{{education.education_gradyear}}" {% else %} data-original="" value="" {% endif %}/>
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_courses">
+				<div class="dashboard_profile_editor_item_label">Courses</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<form class="dashboard_profile_editor_item_addcourse">
+					<input class="dashboard_profile_editor_item_input custom_placeholder" value="Add a Course" />
+				</form>
+				
+				<div class="dashboard_profile_editor_list" data-original="{{education.education_courses}}" data-items="{{education.education_courses}}">
+					
+					{% if education.education_courses %}
+						{% for course in education.courses_as_list %}
+							<div class="dashboard_profile_editor_listitem">{{course}}</div>
+						{% endfor %}
+					{% endif %}
+															
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="dashboard_profile_editor_toolbox">
+				<div class="dashboard_profile_editor_submit" data-type="Education">Done</div>
+				<div class="dashboard_profile_editor_cancel {% if is_new %}dashboard_profile_editor_cancel_temp{% endif %}" data-type="Education">Cancel</div>
+			</div>
+		</div>
+	{% endif %}
+	<!--
+		Code to show the uneditable view sheet of the education
+	-->
+	<div class="dashboard_profile_box_entry" {% if is_new %} style="display: none;" {% else %} style="display: block;" {% endif %}>
+		<div class="dashboard_profile_box_cover">
+			<div class="dashboard_profile_box_overlay"></div>
+			<img class="img_scaled" data-original="{{education.get_education_picture_url}}" src="{{education.get_education_picture_url}}" />
+			<div class="dashboard_profile_box_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}/assets/thumbnails/berkeley.jpg" /></div>
+		</div>
+		<div class="dashboard_profile_box_contents">
+			<div class="dashboard_profile_box_header dashboard_profile_box_school">{{education.education_school}}</div>
+			<div class="dashboard_profile_box_subheader dashboard_profile_box_major">{{education.education_major}}</div>
+			<div class="dashboard_profile_box_subheader dashboard_profile_box_gradyear">Class of {{education.education_gradyear}}</div>
+			<div class="dashboard_profile_box_divider"></div>
+			<div class="dashboard_profile_box_list dashboard_profile_box_courses">										
+				
+				{% for course in education.courses_as_list %}
+					<div class="dashboard_profile_box_list_item">{{course}}</div>
+				{% endfor %}
+				
+			</div>
+		</div>
+	</div>
+</div>

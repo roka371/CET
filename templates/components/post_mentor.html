@@ -1,0 +1,87 @@
+<div class="feed_item" data-userid = "{{u_logged_in.id}}" id="feed_item_{{post.id}}">
+	<div class="feed_item_infostrip">
+		<div class="feed_item_category" style="background-color: #5BB75C"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_mentor.svg" /></div>
+		<a href="/user/{{post.post_author.id}}">
+		<div class="feed_item_user">
+			<div class="feed_item_user_thumbnail"><img class="img_scaled_wh" src="{{post.get_post_author_image}}" /></div>
+			<div class="feed_item_user_right">
+				<div class="feed_item_user_name">{{post.get_author_name}}</div>
+				<div class="feed_item_date">{{post.get_timestamp}}</div>
+			</div>
+		</div>
+		</a>
+	</div>
+	{% if post.get_post_image_url %}
+		<div class="feed_item_thumbnail"><img class="img_scaled" src="{{post.get_post_image_url}}" /></div>
+	{% else %}
+		<div class="feed_item_thumbnail" style="border-bottom: none;"></div>
+	{% endif %}
+	<div class="feed_item_title">{{post.post_title}}</div>
+	<div class="feed_item_special feed_item_mentor">
+		<div class="feed_item_place"><div class="feed_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_location.svg" /></div>{{post.eventpost_location}}</div>
+		<div class="feed_item_time"><div class="feed_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_time.svg" /></div>{{post.get_event_time_interval}}</div>
+		<div class="feed_item_mentor_item feed_item_noborder">
+			
+			{% if post.mentoringpost_mentor_profile %}
+				<div class="feed_item_mentor_item_profilepic"><img class="img_scaled_wh" src="{{mentoringpost_mentor_profile.get_user_profile_url}}" /></div>
+			{% endif %}
+			
+			<div class="feed_item_mentor_item_right">
+				<div class="feed_item_mentor_item_name">{{post.mentoringpost_name}}</div>
+				<div class="feed_item_mentor_item_position">{{post.mentoringpost_shortbio}}</div>
+			</div>
+			<div class="feed_item_mentor_item_description">{{post.mentoringpost_bio}}</div>
+		</div>
+	</div>
+	<div class="feed_item_contents">{{post.post_content}}</div>
+	{% if post.post_link and post.get_tags_as_list.count > 0 %}
+		<div class="feed_item_misc">
+			
+			{% if post.post_link %}
+				<div class="feed_item_misc_link" {% if post.get_tags_as_list.count == 0 %} style="border-bottom: none" {% endif %}>
+					<div class="feed_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_link.svg" /></div>
+					<a href="{{post.post_link}}" target="blank"> {{ post.post_link }} </a> 
+				</div>
+			{% endif %}
+			
+			{% if post.get_tags_as_list.count > 0 %}
+				<div class="feed_item_misc_tag_list">
+					<div class="feed_item_icon" style="padding-top: 5px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_tag.svg" /></div>
+					{% for tag in post.get_tags_as_list %}
+						<div class="feed_item_misc_tag">{{tag.posttag_tag}}</div>
+					{% endfor %}
+							
+					<div class="clear"></div>
+				</div>			
+			{% endif %}
+			
+		</div>
+	{% endif %}
+	<div class="feed_item_footer">
+		<div class="feed_item_like">
+			<div class="feed_item_like_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/like.svg" /></div>
+			<div class="feed_item_like_label">Like</div>
+			<div class="feed_item_like_count">({{post.get_like_count}})</div>
+		</div>
+		<div class="feed_item_clip">
+			<div class="feed_item_clip_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/clip.svg" /></div>
+			<div class="feed_item_clip_label">Clip</div>
+			<div class="feed_item_clip_count">({{post.get_clip_count}})</div>
+		</div>
+		<div class="feed_item_comment">
+			<div class="feed_item_comment_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/comment.svg" /></div>
+			<div class="feed_item_comment_label">Comment</div>
+			<div class="feed_item_comment_count">({{post.get_comment_count}})</div>
+		</div>
+	</div>
+		<div class="feed_item_comment_box">
+		<div class="feed_item_comment_post">
+			<div class="feed_item_comment_post_profilepic"><img class="img_scaled_wh" src="{{u_logged_in.get_user_profile_url}}" style="border-radius: 2px;" /></div>
+			<textarea class="feed_item_comment_post_textarea" placeholder="Write a comment"></textarea>
+			<div class="clear"></div>
+		</div>
+		{% for comment in post.get_comments %}
+			{% include "components/comment_item.html" %}
+		{% endfor %}
+	</div>
+</div>

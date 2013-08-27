@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<g id="Your_Icon">
+	<g>
+		<polygon fill="#FFFFFF" points="3.236,48 11.236,32 88.764,32 96.764,48   "/>
+		<path fill="#FFFFFF" d="M87.764,34l5.765,12H6.472l6-12H88 M90,30H10L0,50h100L90,30L90,30z"/>
+	</g>
+	<g>
+		<rect x="93" y="52" fill="#FFFFFF" width="1" height="32"/>
+		<polygon fill="#FFFFFF" points="96,50 91,50 91,86 96,86 96,50   "/>
+	</g>
+	<g>
+		<rect fill="#FFFFFF" x="84" y="50" width="4" height="18"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M32,50h-5v8H9v-8H4v36h5h18h1h4l4-18V50H32z M27,82H9v-8h18V82z M27,70H9v-8h18V70z"/>
+	</g>
+</g>
+</svg>

@@ -1,0 +1,18 @@
+FOREACH CONVERSATION IN CONVERSATION_LIST:
+
+IF NEWMESSAGE (FROM COMPOSE):
+<div id="message_item_[[CONVERSATION_ID]]" class="messages_item messages_item_temp">
+ELSE:
+<div id="message_item_[[CONVERSATION_ID]]" class="messages_item">
+ENDIF
+
+	<div class="messages_item_thumbnail"><img class="img_scaled_wh" src="[[CONVERSATION_USER_PROFILEPIC]]" /></div>
+	<div class="messages_item_info">
+		<div class="messages_item_name">[[CONVERSATION_USER_NAME]]</div>
+		<div class="messages_item_date">
+			<div class="messages_item_date_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/clock.svg" /></div>
+			<div class="messages_item_date_text">[[CONVERSATION_TIMESTAMP]] (the timestamp of the last message in this conversation) </div>
+		</div>
+		<div class="messages_item_preview">[[CONVERSATION_PREVIEW]] (80 character string from the first message in this conversation) </div>
+	</div>
+</div>

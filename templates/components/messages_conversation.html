@@ -1,0 +1,14 @@
+
+FOREACH MSG IN MSG_LIST:
+
+IF FIRSTITEM:
+<div class="messages_conv_item messages_conv_item_active"> 
+ELSE:
+<div class="messages_conv_item"> 
+ENDIF
+
+	<div class="messages_conv_profilepic"><img class="img_scaled_wh" src="[[MSG_USER_PROFILEPIC]]" /></div>
+	<div class="messages_conv_name">[[MSG_USER]]</div>
+	<div class="messages_conv_date">[[MSG_TIMESTAMP]]</div>
+	<div class="messages_conv_content">[[MSG_CONTENT]]</div>
+</div>

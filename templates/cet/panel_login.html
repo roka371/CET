@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--load stylesheets, favicon, and scripts-->
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/style_panel.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}/jquery-1.8.3.min.js" charset="utf-8"></script>
+    <script src="{{STATIC_URL}}/jquery-ui-1.9.2.min.js"></script>
+    <script src="{{STATIC_URL}}/jquery_masonry_min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/script_panel.js" charset="utf-8"></script>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CET 2.0 | Panel</title>
+</head>
+<body>
+<div id="data">
+	<div id="csrf">{% csrf_token %}</div>
+</div>
+<div id="container">
+	<div id="background">
+		<div id="background_overlay"></div>
+		<div id="background_image"><img class="img_scaled_wh" src="{{STATIC_URL}}/assets/covers/bg_blurred.jpg" /></div>
+	</div>
+	<div id="login">
+		<div id="login_box">
+			<div id="login_title">
+				<div id="login_title_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/key_alt.svg" /></div>
+				<div id="login_title_text">Administrator Login</div>
+				<div class="clear"></div>
+			</div>
+			<div id="login_caption">Administrators can login to CET 2.0 Panel to change user privileges, moderate user postings, and make changes to static content. If you are a faculty but does not have an administrator privileges, <a href="">request an access.</a></div>
+			<div id="login_email" class="login_item">
+				<div class="login_item_caption">Email address</div>
+				<input id="login_email_input" class="login_item_input" placeholder="admin@berkeley.edu" type="text" />
+			</div>
+			<div id="login_password" class="login_item">
+				<div class="login_item_caption">Password</div>
+				<input id="login_password_input" class="login_item_input" placeholder="password" type="password" />
+			</div>
+			<div id="login_footer">
+				<div id="login_submit">
+					<div id="login_submit_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/arrow_right_alt.svg" /></div>
+					<div id="login_submit_text">Login</div>
+					<div class="clear"></div>
+				</div>
+				<div id="login_back">Go back to previous page</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

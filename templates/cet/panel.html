@@ -1,0 +1,130 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--load stylesheets, favicon, and scripts-->
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/style_panel.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}/jquery-1.8.3.min.js" charset="utf-8"></script>
+    <script src="{{STATIC_URL}}/jquery-ui-1.9.2.min.js"></script>
+    <script src="{{STATIC_URL}}/jquery_masonry_min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/script_panel.js" charset="utf-8"></script>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CET 2.0 | Panel</title>
+</head>
+<body>
+<div id="data">
+	<div id="csrf">{% csrf_token %}</div>
+</div>
+<div id="header">
+	<div id="header_wrapper">
+		<div id="header_title">
+			<div id="header_title_main">CET 2.0</div>
+			<div id="header_title_sub">Panel</div>
+		</div>
+		<div id="header_user">
+			<div id="header_user_profile"><img class="img_scaled" src="{{STATIC_URL}}/users/roka371/profile.jpg" /></div>
+			<div id="header_user_name">Shawn Park</div>
+			<div id="header_user_logout"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/logout.svg" /></div>
+		</div>
+	</div>
+</div>
+<div id="nav">
+	<div id="nav_wrapper">
+		<div id="nav_arrow"></div>
+		<div class="nav_item nav_item_active">Home</div>
+		<div class="nav_item">Contents</div>
+		<div class="nav_item">Users</div>
+		<div class="nav_item">Pages</div>
+		<div class="nav_item">Forms</div>
+		<div class="nav_item">Statistics</div>
+	</div>
+</div>
+<div id="contents">
+	<div id="contents_nav">
+		<div id="contents_nav_header">
+			<div id="contents_nav_title">Forms</div>
+			<div id="contents_nav_forms_add">+</div>
+		</div>
+		<div id="contents_nav_list">
+			<div class="contents_nav_item">
+				<div class="contents_nav_item_name">CET Certificate</div>
+				<div class="contents_nav_item_count">37</div>
+			</div>
+			<div class="contents_nav_item">
+				<div class="contents_nav_item_name">Beta Invites</div>
+				<div class="contents_nav_item_count">11</div>
+			</div>
+			<div class="contents_nav_item">
+				<div class="contents_nav_item_name">Beta Feedbacks</div>
+				<div class="contents_nav_item_count">8</div>
+			</div>
+			<div class="contents_nav_item">
+				<div class="contents_nav_item_name">Feature Requests</div>
+				<div class="contents_nav_item_count">7</div>
+			</div>
+			<div class="contents_nav_item">
+				<div class="contents_nav_item_name">Media Inquiries</div>
+				<div class="contents_nav_item_count">3</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="contents_box_container">
+		<div id="contents_box">
+			<div id="contents_box_header">
+				<div id="contents_box_title">CET Certificates</div>
+				<div id="contents_box_search">
+					<div id="contents_box_search_underline"></div>
+					<input id="contents_box_search_input" type="text" />
+					<div id="contents_box_search_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/search_orange.svg" /></div>
+				</div>
+			</div>
+			<div id="contents_box_main">
+				<div id="contents_box_form_grid">
+					<div class="contents_box_form_grid_item">
+						<div class="contents_box_form_grid_item_info">
+							<div class="contents_box_form_grid_item_name">Shawn Park</div>
+							<div class="contents_box_form_grid_item_date">Feb 28 2013</div>
+						</div>
+						<div class="contents_box_form_grid_item_status contents_box_form_grid_item_status_unseen"></div>
+					</div>
+					<div class="contents_box_form_grid_item">
+						<div class="contents_box_form_grid_item_info">
+							<div class="contents_box_form_grid_item_name">Shawn Park</div>
+							<div class="contents_box_form_grid_item_date">Feb 28 2013</div>
+						</div>
+						<div class="contents_box_form_grid_item_status"><img src="{{STATIC_URL}}/assets/icons/eye.svg" /></div>
+					</div>
+					<div class="contents_box_form_grid_item" style="margin-right: 0px;">
+						<div class="contents_box_form_grid_item_info">
+							<div class="contents_box_form_grid_item_name">Shawn Park</div>
+							<div class="contents_box_form_grid_item_date">Feb 28 2013</div>
+						</div>
+						<div class="contents_box_form_grid_item_status"><img src="{{STATIC_URL}}/assets/icons/eye.svg" /></div>
+					</div>
+					<div class="contents_box_form_grid_item">
+						<div class="contents_box_form_grid_item_info">
+							<div class="contents_box_form_grid_item_name">Shawn Park</div>
+							<div class="contents_box_form_grid_item_date">Feb 28 2013</div>
+						</div>
+						<div class="contents_box_form_grid_item_status"><img src="{{STATIC_URL}}/assets/icons/eye.svg" /></div>
+					</div>
+					<div class="contents_box_form_grid_item">
+						<div class="contents_box_form_grid_item_info contents_box_form_grid_item_info_active">
+							<div class="contents_box_form_grid_item_name">Shawn Park</div>
+							<div class="contents_box_form_grid_item_date">Feb 28 2013</div>
+						</div>
+						<div class="contents_box_form_grid_item_status contents_box_form_grid_item_status_active"><img src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div id="contents_box_form_content">
+					<div id="contents_box_form_back"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+</body>
+</html>

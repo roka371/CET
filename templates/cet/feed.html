@@ -1,0 +1,218 @@
+{% extends 'cet/template.html' %}
+{% block content %}
+<div id="contents" style="padding: 0px; padding-top: 40px;">
+	<div id="contents_post">
+		<div id="contents_post_selector">
+			<div id="contents_post_selector_add"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+			<div class="contents_post_selector_item contents_post_selector_text">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_text.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div> Free Post</div>
+			</div>
+			<div class="contents_post_selector_item contents_post_selector_event">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_event.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div>Event</div>
+			</div>
+			<div class="contents_post_selector_item contents_post_selector_team">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_team.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div>Team Building</div>
+			</div>
+			<div class="contents_post_selector_item contents_post_selector_startup">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_startup.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div>Startup Posting</div>
+			</div>
+			<div class="contents_post_selector_item contents_post_selector_mentor">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_mentor.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div>Mentoring</div>
+			</div>
+			<div class="contents_post_selector_item contents_post_selector_investment">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_investment.svg" />
+				<div class="contents_post_selector_tooltip"><div class="contents_post_selector_tooltip_arrow"></div>Fundraising</div>
+			</div>
+			<div id="contents_post_selector_caption">Tap on a button to write a post</div>
+			<div id="contents_post_selector_user">
+				<div id="contents_post_selector_user_thumbnail"><img class="img_scaled_wh" src="{{u_logged_in.get_user_profile_url}}" /></div>
+				<div id="contents_post_selector_user_right">
+					<div id="contents_post_selector_user_name">{{u_logged_in.get_full_name}}</div>
+					<div id="contents_post_selector_date">{% now "DATE_FORMAT" %}</div>
+				</div>
+			</div>
+		</div>
+		<div id="contents_post_editor">
+			<div id="contents_post_editor_thumbnail">
+				<input id="contents_post_editor_thumbnail_upload" type="file" onchange="post_editor_preview(this);" />
+				<div id="contents_post_editor_thumbnail_guide">Add a Photo</div>
+				<div id="contents_post_editor_thumbnail_preview"><img class="img_scaled" style="display: none;" /></div>
+			</div>
+			<div id="contents_post_editor_title">
+				<input id="contents_post_editor_title_input" placeholder="Title" />
+			</div>
+			<div id="contents_post_editor_location" class="contents_post_editor_special">
+				<div class="contents_post_editor_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_location.svg" /></div>
+				<input class="contents_post_editor_special_input" placeholder="Location" />
+				<div class="clear"></div>
+			</div>
+			<div id="contents_post_editor_time" class="contents_post_editor_special">
+				<div id="contents_post_editor_time_from">
+					<div class="contents_post_editor_time_label">From</div>
+					<select id="contents_post_editor_time_from_month" class="contents_post_editor_time_select" type="singleselect">
+						<option value="">Month</option>
+						<option value="Jan">January</option>
+						<option value="Feb">February</option>
+						<option value="Mar">March</option>
+						<option value="Apr">April</option>
+						<option value="May">May</option>
+						<option value="Jun">June</option>
+						<option value="Jul">July</option>
+						<option value="Aug">August</option>
+						<option value="Sep">September</option>
+						<option value="Oct">October</option>
+						<option value="Nov">November</option>
+						<option value="Dec">December</option>
+					</select>
+					<input id="contents_post_editor_time_from_day" class="contents_post_editor_time_input" placeholder="Day" style="width: 45px;" />
+					<input id="contents_post_editor_time_from_year" class="contents_post_editor_time_input" placeholder="Year" />
+					<input id="contents_post_editor_time_from_time" class="contents_post_editor_time_input contents_post_editor_time_input_time" placeholder="Time" style="width: 100px; margin-right: 0px;" />
+					<div class="contents_post_editor_time_allday" data-type="from">All Day?</div>
+					<div class="clear"></div>
+				</div>
+				<div id="contents_post_editor_time_addend">Add Ending Time</div>
+				<div id="contents_post_editor_time_to" style="display: none;">
+					<div class="contents_post_editor_time_label">To</div>
+					<select id="contents_post_editor_time_to_month" class="contents_post_editor_time_select" type="singleselect">
+						<option value="">Month</option>
+						<option value="Jan">January</option>
+						<option value="Feb">February</option>
+						<option value="Mar">March</option>
+						<option value="Apr">April</option>
+						<option value="May">May</option>
+						<option value="Jun">June</option>
+						<option value="Jul">July</option>
+						<option value="Aug">August</option>
+						<option value="Sep">September</option>
+						<option value="Oct">October</option>
+						<option value="Nov">November</option>
+						<option value="Dec">December</option>
+					</select>
+					<input id="contents_post_editor_time_to_day" class="contents_post_editor_time_input" placeholder="Day" style="width: 45px;" />
+					<input id="contents_post_editor_time_to_year" class="contents_post_editor_time_input" placeholder="Year" />
+					<input id="contents_post_editor_time_to_time" class="contents_post_editor_time_input contents_post_editor_time_input_time" placeholder="Time" style="width: 100px; margin-right: 0px;" />
+					<div class="contents_post_editor_time_allday" data-type="to">All Day?</div>
+					<div id="contents_post_editor_time_to_remove">x</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div id="contents_post_editor_money" class="contents_post_editor_special">
+				<div class="contents_post_editor_icon" style="margin-top: -2px; width: 18px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_money.svg" /></div>
+				<input class="contents_post_editor_special_input" placeholder="How much money do you want to raise?" />
+				<div class="clear"></div>
+			</div>
+			<div id="contents_post_editor_team" class="contents_post_editor_special">
+				<div class="contents_post_editor_team_position">
+					<input class="contents_post_editor_team_name contents_post_editor_team_input" placeholder="Position (ex. UI Designer)" />
+					<input class="contents_post_editor_team_qty contents_post_editor_team_input" placeholder="How many?" style="width: 90px;" />
+					<div class="contents_post_editor_team_position_skill">
+						<div class="contents_post_editor_icon" style="margin-top: 5px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_skill.svg" /></div>
+						<form class="contents_post_editor_team_position_skill_form" data-skills="">
+							<input type="text" class="contents_post_editor_team_position_skill_input" placeholder="Add a Skill" />
+						</form>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div id="contents_post_editor_team_addposition">Add another Position</div>
+			</div>
+			<div id="contents_post_editor_startup" class="contents_post_editor_special">
+				<div class="contents_post_editor_startup_member">
+					<input class="contents_post_editor_startup_name contents_post_editor_startup_input" placeholder="Enter a team member" />
+					<input class="contents_post_editor_startup_position contents_post_editor_startup_input" placeholder="Position" style="width: 150px;" />
+				</div>
+				<div id="contents_post_editor_startup_addmember">Add another Member</div>
+			</div>
+			<div id="contents_post_editor_mentor" class="contents_post_editor_special">
+				<input id="contents_post_editor_mentor_name" class="contents_post_editor_mentor_input" placeholder="Mentor Name" />
+				<input id="contents_post_editor_mentor_position" class="contents_post_editor_mentor_input" placeholder="Position" style="width: 150px;" />
+				<textarea id="contents_post_editor_mentor_textarea" placeholder="A brief bio about the mentor"></textarea>
+			</div>
+			<div id="contents_post_editor_contents">
+				<textarea id="contents_post_editor_contents_textarea" placeholder="What do you want to share?"></textarea>
+			</div>
+		</div>
+		<div id="contents_post_editor_toolbox">
+			<div id="contents_post_editor_submit">Submit</div>
+			<div id="contents_post_editor_cancel">Cancel</div>
+			<div id="contents_post_editor_misc">
+				<div id="contents_post_editor_link">
+					<div class="contents_post_editor_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_link.svg" /></div>
+					<input id="contents_post_editor_link_input" type="text" placeholder="Add a Link" />
+				</div>
+				<div id="contents_post_editor_tag">
+					<div class="contents_post_editor_icon" style="padding-top: 5px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_tag.svg" /></div>
+					<form id="contents_post_editor_tag_form" data-tags="">
+						<input type="text" id="contents_post_editor_tag_input" placeholder="Add a Tag" />
+					</form>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="contents_feed">
+		<div id="feed_container">
+			<div id="feed_toolbox">
+				<div id="feed_search">
+					<div id="feed_search_header">Search</div>
+					<div id="feed_search_keyword" class="feed_search_row">
+						<div class="feed_search_row_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/search_keyword.svg" /></div>
+						<input id="feed_search_keyword_input" class="feed_search_row_input custom_placeholder" value="Keyword" />
+					</div>
+					<div id="feed_search_category" class="feed_search_row button" data-toggle="0">
+						<div class="feed_search_row_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/search_category.svg" /></div>
+						<div id="feed_search_category_value" class="feed_search_row_text">Category</div>
+					</div>
+					<div id="feed_search_category_option" class="feed_search_dropdown">
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">All</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Free Post</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Events</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Team Building</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Startup Posting</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Mentoring</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_category">Fundraising</div>
+					</div>
+					<div id="feed_search_author" class="feed_search_row">
+						<div class="feed_search_row_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/search_author.svg" /></div>
+						<input id="feed_search_author_input" class="feed_search_row_input custom_placeholder" value="Author" />
+					</div>
+					<div id="feed_search_timeframe" class="feed_search_row button" data-toggle="0">
+						<div class="feed_search_row_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/search_timeframe.svg" /></div>
+						<div id="feed_search_timeframe_value" class="feed_search_row_text">Timeframe</div>
+					</div>
+					<div id="feed_search_timeframe_option" class="feed_search_dropdown">
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_timeframe">Anytime</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_timeframe">Last day</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_timeframe">Last hour</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_timeframe">Last month</div>
+						<div class="feed_search_dropdown_item feed_search_dropdown_item_timeframe">Last year</div>
+					</div>
+					<div id="feed_search_helper">Press "Enter" to Search</div>
+				</div>
+				<div id="feed_sort">
+					<div id="feed_sort_header">Sort By</div>
+					<div id="feed_sort_recent" class="feed_sort_item">
+						<div class="feed_sort_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/timeframe.svg" /></div>
+						<div class="feed_sort_item_text">Recent</div>
+					</div>
+					<div id="feed_sort_popularity" class="feed_sort_item">
+						<div class="feed_sort_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/popularity.svg" /></div>
+						<div class="feed_sort_item_text">Popularity</div>
+					</div>
+					<div id="feed_sort_active">
+						<div id="feed_sort_active_arrow"></div>
+						<div id="feed_sort_active_line"></div>
+					</div>
+				</div>
+			</div>
+			<div id="feed_temp">
+			
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

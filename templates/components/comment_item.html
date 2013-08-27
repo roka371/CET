@@ -1,0 +1,19 @@
+<div class="feed_item_comment_item" id = 'feed_comment_{{comment.id}}' data-userid = "{{u_logged_in.id}}">
+	<div class="feed_item_comment_item_header">
+		<a href = "/user/{{comment.comment_author.id}}">
+			<div class="feed_item_comment_item_profilepic"><img class="img_scaled_wh" src="{{comment.comment_author.get_user_profile_url}}" style="border-radius: 2px;" /></div>
+		</a>
+		
+		<div class="feed_item_comment_item_info">
+			<a href = "/user/{{comment.comment_author.id}}">
+				<div class="feed_item_comment_item_author">{{comment.comment_author.get_full_name}}</div>
+			</a>
+			<div class="feed_item_comment_item_date">{{comment.get_timestamp}}</div>
+		</div>
+		<div class="feed_item_comment_item_like">
+			<div class="feed_item_comment_item_like_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/like.svg" /></div>
+			<div class="feed_item_comment_item_like_count">{{comment.get_like_count}}</div>
+		</div>
+	</div>
+	<div class="feed_item_comment_item_content">{{comment.comment_content}}</div>
+</div>

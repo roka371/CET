@@ -1,0 +1,116 @@
+{% load feed_template_tags %}
+<div id="connect_masonry" style="display: none;">
+	{% for user in user_list %}
+	
+		<div class="connect_item">
+			<a href="/user/{{user.id}}">
+				<div class="connect_item_profilepic"><img class="img_scaled" src="{{user.get_user_profile_url}}" /></div>
+				<div class="connect_item_name">{{user.first_name}} {{user.last_name}}</div>
+			</a>
+			<div class="connect_item_info">
+				<div class="connect_item_education">
+					<div class="connect_item_education_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/education_dark.svg" /></div>
+					<div class="connect_item_education_text">{{user.get_latest_education.education_school}}</div>
+				</div>
+				<div class="connect_item_job">
+					<div class="connect_item_job_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/job_dark.svg" /></div>
+					<div class="connect_item_job_text">{{user.get_latest_job.job_company}}</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="connect_item_bio">{{user.user_about}}</div>
+			
+			{% if user.get_interests_as_list.count > 0 %}
+			<div class="connect_item_interest_box">
+				<div class="connect_item_interest_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/like.svg" /></div>
+				
+				{% for interest in user.get_interests_as_list %}
+				
+					<div class="connect_item_interest_tag"{% if forloop.counter == 5 and user.get_interests_as_list.count > 5 %} style="display: none;" {% endif %}>{{interest.interest}}</div>
+					
+				{% endfor %}
+				{% if user.get_interests_as_list.count > 5 %}
+					<div class="connect_item_interest_tag_overflow">+ {{user.get_interests_as_list.count|add:"-5"}} More</div>
+				{% endif %}
+				<div class="clear"></div>
+			</div>
+			{% endif %}
+			
+			<div class="connect_item_footer">
+				<div class="connect_item_follow" data-id="{{user.id}}">
+					<div class="connect_item_follow_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add_dark.svg" /></div>
+					<div class="connect_item_follow_text">Follow</div>
+				</div>
+				<div class="connect_item_following" data-id="{{user.id}}" {% if connections|get_item:forloop.counter0 %} style="display: block;" {% endif %}>
+					<div class="connect_item_following_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/check.svg" /></div>
+					<div class="connect_item_following_text">Following</div>
+				</div>
+				<div class="connect_item_follower">
+					<div class="connect_item_follower_count">{{user.get_follower_count}}</div>
+					<div class="connect_item_follower_label">Followers</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	{% for company in company_list %}
+		<a href="/company/{{company.id}}">
+			<div class="connect_item">
+				<div class="connect_item_profilepic"><img class="img_scaled" src="{{company.get_company_cover_url}}" /></div>
+				<a href="/company/{{company.id}}">
+					<div class="connect_item_name">{{company.company_name}}</div>
+				</a>
+				<div class="connect_item_info">
+					<div class="connect_item_education">
+						<div class="connect_item_education_text">{{company.company_description|slice:":150"}}{% if company.company_description|length > 150 %}...{% endif %}</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="connect_item_bio">{{company.description}}</div>
+				
+				{% if company.get_tags_as_list.count > 0 %}
+					<div class="connect_item_interest_box">
+						<div class="connect_item_interest_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/post_tag.svg" /></div>
+						
+						{% for tag in company.get_tags_as_list %}
+						
+							<div class="connect_item_interest_tag"{% if forloop.counter == 5 and company.get_tags_as_list.count > 5 %} style="display: none;" {% endif %}>{{tag.companytag_tag}}</div>
+							
+						{% endfor %}
+						{% if company.get_tags_as_list.count > 5 %}
+							<div class="connect_item_interest_tag_overflow">+ {{company.get_tags_as_list.count|add:"-5"}} More</div>
+						{% endif %}
+						<div class="clear"></div>
+					</div>
+				{% endif %}
+			</div>
+		</a>
+	{% endfor %}
+</div>
+
+<script>
+
+var $container = $('#connect_masonry');
+$container.imagesLoaded(function(){
+  $container.masonry({
+    itemSelector : '.connect_item',
+    gutterWidth: 40, 
+    isFitWidth: true,
+    isResizable: true,
+    isAnimated: true
+  });
+});
+
+$('#connect_masonry').show('fade', 300);
+
+$('.connect_item_following').hover(function(){
+	$(this).children('.connect_item_following_icon').html('<img class="img_scaled" src="/static/assets/icons/x.svg" />');
+	$(this).children('.connect_item_following_text').html('Unfollow');
+	$(this).css({'background': '#DA4F49'});
+}, function(){
+	$(this).children('.connect_item_following_icon').html('<img class="img_scaled" src="/static/assets/icons/check.svg" />');
+	$(this).children('.connect_item_following_text').html('Following');
+	$(this).css({'background': '#5BB75C'});
+});
+
+</script>

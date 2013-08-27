@@ -1,0 +1,233 @@
+{% extends 'cet/template.html' %}
+{% block content %}
+<div id="contents" style="padding: 0px; padding-top: 30px;">
+	
+	<div id="profile_header">
+		<div id="profile_thumbnail"><img class="img_scaled_wh" src="{{user.get_user_profile_url}}" /></div>
+		<div id="profile_info">
+			<div id="profile_name">{{user.first_name}} {{user.last_name}}</div>
+			<div id="profile_follower">{{u_follower_count}} Followers</div>
+			<div id="profile_following">{{u_following_count}} Following</div>
+		</div>
+		<div id="profile_toolbox">
+			<div id="profile_follow" class="profile_toolbox_item" style="width: 30px; height: 30px; padding: 15px; {% if u_followed or u_editable%}display:none;{% endif %}">
+				<img class="img_scaled" src="{{STATIC_URL}}assets/icons/follow.svg" />
+			</div>
+			<div id="profile_follow_check"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/check.svg" /></div>
+			{% comment %}
+			<div id="profile_message" class="profile_toolbox_item"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/mail.svg" /></div>
+			<div id="profile_appointment" class="profile_toolbox_item"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_event.svg" /></div>
+			{% endcomment %}
+			<div class="clear"></div>
+		</div>
+	</div>
+	
+	<div id="dashboard_contents">
+		<div class="dashboard_profile_item">
+			<div class="dashboard_profile_header">Personal</div>
+			
+			{% if u_editable %}
+			
+				<div class="dashboard_profile_personal_edit">Edit</div>
+				
+				<div class="dashboard_profile_editor_personal" style="display: none;">
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_description">
+						<div class="dashboard_profile_editor_item_label_personal">Description</div>
+						<textarea class="dashboard_profile_editor_item_textarea_personal" data-original="{{u_profile.description}}">{{u_profile.description}}</textarea> 
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_facebook">
+						<div class="dashboard_profile_editor_item_label_personal">Facebook</div>
+						<input class="dashboard_profile_editor_item_input_personal" placeholder="Enter your Facebook URL" data-original="{{u_profile.facebook}}" value="{{u_profile.facebook}}" />
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_twitter">
+						<div class="dashboard_profile_editor_item_label_personal">Twitter</div>
+						<input class="dashboard_profile_editor_item_input_personal" placeholder="Enter your Twitter Username" data-original="{{u_profile.twitter_username}}" value="{{u_profile.twitter_username}}" />
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_linkedin">
+						<div class="dashboard_profile_editor_item_label_personal">Linkedin</div>
+						<input class="dashboard_profile_editor_item_input_personal" placeholder="Enter your Linkedin URL" data-original="{{u_profile.linkedin}}" value="{{u_profile.linkedin}}" />
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_website">
+						<div class="dashboard_profile_editor_item_label_personal">Website</div>
+						<input class="dashboard_profile_editor_item_input_personal" placeholder="Enter your Website URL" data-original="{{u_profile.website}}" value="{{u_profile.website}}" />
+					</div>
+					<div class="dashboard_profile_editor_toolbox">
+						<div class="dashboard_profile_editor_submit" data-type="Personal" user-id="{{user.id}}">Done</div>
+						<div class="dashboard_profile_editor_cancel" data-type="Personal">Cancel</div>
+					</div>
+				</div>
+			
+			{% endif %}
+			
+			<div class="dashboard_profile_personal" style="display: block;">
+				<div id="dashboard_profile_personal_description">
+					{{u_profile.description}}
+				</div>
+				<div class="dashboard_profile_personal_social">
+					{% if u_profile.facebook %}
+						<a href="{{u_profile.facebook}}" id="dashboard_profile_personal_facebook" target="_blank">
+							<div class="dashboard_profile_personal_social_item">
+								<div class="dashboard_profile_personal_social_item_caption">Facebook</div>
+							</div>
+						</a>
+					{% endif %}
+					{% if u_profile.twitter_username %}
+						<a href="https://twitter.com/{{u_profile.twitter_username}}" id="dashboard_profile_personal_twitter" target="_blank">
+							<div class="dashboard_profile_personal_social_item">
+								<div class="dashboard_profile_personal_social_item_caption">Twitter</div>
+							</div>
+						</a>
+					{% endif %}
+					{% if u_profile.linkedin %}
+						<a href="{{u_profile.linkedin}}" id="dashboard_profile_personal_linkedin" target="_blank">
+							<div class="dashboard_profile_personal_social_item">
+								<div class="dashboard_profile_personal_social_item_caption">Linkedin</div>
+								</div>
+						</a>
+					{% endif %}
+					{% if u_profile.website %}
+						<a href="{{u_profile.website}}" id="dashboard_profile_personal_website" target="_blank">
+							<div class="dashboard_profile_personal_social_item">
+								<div class="dashboard_profile_personal_social_item_caption">Website</div>
+							</div>
+						</a>
+					{% endif %}
+					<a href="mailto:{{user.email}}" id="dashboard_profile_personal_email"><div class="dashboard_profile_personal_social_item_caption">
+						<div class="dashboard_profile_personal_social_item">
+						Email</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="dashboard_profile_item" style="background: #edeae5;">
+			<div class="dashboard_profile_header">Skills</div>
+			{% if u_skills.count == 0 and u_logged_in.id != user.id%}
+				<div class="dashboard_profile_nocontent">
+					<div class="dashboard_profile_nocontent_caption">This user did not enter any skills.</div>
+				</div>
+			{% endif %}
+			
+			{% if u_editable %}
+			
+				<div class="dashboard_profile_item_listadder">
+					<div class="dashboard_profile_item_listadder_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+					<form class="dashboard_profile_editor_item_addskill" user-id="{{user.id}}">
+						<input class="dashboard_profile_item_listadder_input custom_placeholder" value="Add a Skill" />
+					</form>
+				</div>
+
+			{% endif %}
+			
+			<div class="dashboard_profile_box_list">
+				
+				{% for skill in u_skills %}
+				
+					<div class="dashboard_profile_box_list_item" data-type="skill" data-id="{{skill.id}}">{{skill.skill}}</div>
+					
+				{% endfor %}
+				
+			</div>
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #f7f5f2;">
+			<div class="dashboard_profile_header">Interest</div>
+			{% if u_interests.count == 0 and u_logged_in.id != user.id%}
+				<div class="dashboard_profile_nocontent">
+					<div class="dashboard_profile_nocontent_caption">This user did not enter any interests.</div>
+				</div>
+			{% endif %}
+			
+			{% if u_editable %}
+			
+				<div class="dashboard_profile_item_listadder">
+					<div class="dashboard_profile_item_listadder_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+					<form class="dashboard_profile_editor_item_addinterest" user-id="{{user.id}}">
+						<input class="dashboard_profile_item_listadder_input custom_placeholder" value="Add an Interest" />
+					</form>
+				</div>
+				
+			{% endif %}
+			
+			<div class="dashboard_profile_box_list">
+			
+				{% for interest in u_interests %}
+				
+					<div class="dashboard_profile_box_list_item" data-type="interest" data-id="{{interest.id}}">{{interest.interest}}</div>
+				
+				{% endfor %}
+				
+			</div>
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #edeae5;">
+			<div class="dashboard_profile_header">Education</div>
+			{% if u_educations.count == 0 and u_logged_in.id != user.id %}
+				<div class="dashboard_profile_nocontent">
+					<div class="dashboard_profile_nocontent_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/education_brown.svg" /></div>
+					<div class="dashboard_profile_nocontent_caption">This user did not enter any education information.</div>
+				</div>
+			{% endif %}
+			
+			{% for education in u_educations %}
+				{% include "components/profile_education.html" %}
+			{% endfor %}
+			{% if u_editable %}
+			
+				<div id="dashboard_profile_addbox_education" class="dashboard_profile_addbox">
+					<div class="dashboard_profile_addbox_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/student.svg" /></div>
+					<div class="dashboard_profile_addbox_text">Add an Education</div>
+				</div>
+			
+			{% endif %}
+			
+		</div>
+		
+		<div class="dashboard_profile_item">
+			<div class="dashboard_profile_header">Jobs</div>
+			{% if u_jobs.count == 0 and u_logged_in.id != user.id%}
+				<div class="dashboard_profile_nocontent">
+					<div class="dashboard_profile_nocontent_icon" style="width: 120px; padding-top; 15px; padding-bottom: 30px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/job_brown.svg" /></div>
+					<div class="dashboard_profile_nocontent_caption">This user did not enter any job information.</div>
+				</div>
+			{% endif %}
+			
+			{% for job in u_jobs %}
+				{% include "components/profile_job.html" %}
+			{% endfor %}
+			
+			{% if u_editable %}
+			
+				<div id="dashboard_profile_addbox_job" class="dashboard_profile_addbox">
+					<div class="dashboard_profile_addbox_icon" style="width: 40px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/job.svg" /></div>
+					<div class="dashboard_profile_addbox_text">Add a Job</div>
+				</div>
+
+			{% endif %}
+			
+		</div>
+		
+		<div class="dashboard_profile_item" style="background-color: #edeae5;">
+			<div class="dashboard_profile_header">Projects</div>
+			{% if u_projects.count == 0 and u_logged_in.id != user.id%}
+				<div class="dashboard_profile_nocontent">
+					<div class="dashboard_profile_nocontent_icon" style="width: 150px; padding-bottom: 15px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/project_brown.svg" /></div>
+					<div class="dashboard_profile_nocontent_caption">This user did not enter any project information.</div>
+				</div>
+			{% endif %}
+			
+			{% for project in u_projects %}
+				{% include "components/profile_project.html" %}
+			{% endfor %}
+			
+			{% if u_editable %}
+			
+				<div id="dashboard_profile_addbox_project" class="dashboard_profile_addbox">
+					<div class="dashboard_profile_addbox_icon" style="width: 40px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/project.svg" /></div>
+					<div class="dashboard_profile_addbox_text">Add a Project</div>
+				</div>
+
+			{% endif %}
+
+		</div>
+	</div>
+</div>
+{% endblock content %}

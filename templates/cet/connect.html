@@ -1,0 +1,30 @@
+{% extends 'cet/template.html' %}
+{% block content %}
+<div id="contents" style="padding: 40px; padding-top: 20px;">
+	<div id="connect_search">
+		<div id="connect_search_bar">
+			<div id="connect_search_filter">
+				<div id="connect_search_filter_selector">
+					<div id="connect_search_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/search_light.svg" /></div>
+					<div id="connect_search_filter_selected">Any</div>
+					<div id="connect_search_filter_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/arrow_down_light.svg" /></div>
+					<div id="connect_search_filter_list">
+						<div class="connect_search_filter_item">Any</div>
+						<div class="connect_search_filter_item">Name</div>
+						<div class="connect_search_filter_item">Interest</div>
+						<div class="connect_search_filter_item">Skill</div>
+						<div class="connect_search_filter_item">Job</div>
+						<div class="connect_search_filter_item">Education</div>
+					</div>
+				</div>
+			</div>
+			<form id="connect_search_form" data-option="Any">
+				<input id="connect_search_input" class="custom_placeholder" type="text" value="Look for a person..." />
+			</form>
+		</div>
+	</div>
+	<div id="connect_content">
+		
+	</div>
+</div>
+{% endblock content %}

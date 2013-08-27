@@ -1,0 +1,517 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--load stylesheets, favicon, and scripts-->
+	<link rel="icon" href="{{STATIC_URL}}favicon.ico" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}style.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}jquery-1.8.3.min.js" charset="utf-8"></script>
+    <script src="{{STATIC_URL}}jquery-ui-1.9.2.min.js"></script>
+    <script src="{{STATIC_URL}}jquery_masonry_min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}script.js" charset="utf-8"></script>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CET 2.0</title>
+</head>
+<body>
+	<div id="data">
+		<div id="res_userprofilepic">{{u_logged_in.get_user_profile_pic}}</div>
+		<div id="res_username">{{u_logged_in.get_full_name}}</div>
+		<div id="page">{{content}}</div>
+		<div id="logged_in">{{u_logged_in.is_authenticated}}</div>
+		<div id="csrf">{% csrf_token %}</div>
+		<div id="user_id">{{u_logged_in.id}}</div>
+		{% if content == "Feed" %}
+			<div id="feed_page">{{page}}</div>
+			<div id="feed_category">{{category}}</div>
+			<div id="feed_sorting">{{sorting}}</div>
+		{% elif content == "Connect" %}
+			<div id="connect_category">{{category}}</div>
+		{% elif content == "User Profile" %}
+			<div id="editable">{{u_editable}}</div>
+			<div id="profile_id">{{user.id}}</div>
+		{% elif content == "Company Profile" %}
+			<div id="company_id">{{company.id}}</div>
+		{% endif %}
+	</div>
+	<div id="modal" {% if u_logged_in.is_authenticated and u_logged_in.affiliation == None %} style="display: block;" {% endif %}>
+		<div id="modal_strip_overlay"></div>
+		<div id="signup_modal2_strip" class="modal_strip_container">
+			<div class="modal_strip">
+				<div class="modal_strip_message">If you cancel, you have to signup from the beginning. Are you sure you want to cancel?</div>
+				<div class="modal_strip_button" id="signup_modal2_cancel_no">No</div>
+				<div class="modal_strip_button" id="signup_modal2_cancel_yes">Yes</div>
+			</div>
+		</div>
+		<div id="modal_overlay"></div>
+		<div id="messages_modal" class="modal_box">
+			<div class="modal_box_header">Send a Message</div>
+			<div class="modal_box_contents">
+				<div id="messages_modal_recipient">
+					<div id="messages_modal_recipient_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/user_dark.svg" /></div>
+					<div id="messages_modal_recipient_label">To:</div>
+					<input id="messages_modal_recipient_input" type="text" />
+					<div class="clear"></div>
+				</div>
+				<textarea id="messages_modal_msg" placeholder="Write a message..."></textarea>
+			</div>
+			<div class="modal_box_footer" style="height: 50px;">
+				<div id="messages_modal_cancel">Cancel</div>
+				<div id="messages_modal_submit">Send</div>
+			</div>
+		</div>
+		<div id="add_company_modal" class="modal_box">
+			<div class="modal_box_header">Add a Company</div>
+			<div class="modal_box_contents">
+				{% comment %}
+				<div id="add_company_logo">
+					<input id="add_company_logo_upload" type="file" onchange="add_company_logo_preview(this);" />
+					<div id="add_company_logo_guide"><img class="img_scaled_wh" src="{{STATIC_URL}}assets/icons/add_dark.svg" style="margin-top: -2px;" /></div>
+					<div id="add_company_logo_preview"><img class="img_scaled_wh" src="" style="display: none;" /></div>
+				</div>
+				{% endcomment %}
+				<div id="add_company_info">
+					<div id="add_company_name">
+						<div class="add_company_icon"><img class="img_scaled_wh" src="{{STATIC_URL}}assets/icons/job_dark.svg" /></div>
+						<input type="text" placeholder="Company Name" />
+						<div class="clear"></div>
+					</div>
+					<div id="add_company_date">
+						<div class="add_company_icon"><img class="img_scaled_wh" src="{{STATIC_URL}}assets/icons/timeframe.svg" /></div>
+						<input type="text" placeholder="Founding Year" />
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				<div id="add_company_description">
+					<textarea placeholder="Write a description..."></textarea>
+				</div>
+			</div>
+			<div class="modal_box_footer" style="height: 50px;">
+				<div id="add_company_cancel">Cancel</div>
+				<div id="add_company_submit">Send</div>
+			</div>
+		</div>
+		<div id="auth_box" class="modal_box">
+			<div class="modal_box_header">Please Login to continue.</div>
+			<div class="modal_box_contents">
+				<div id="auth_box_login">Login</div>
+				<div id="auth_box_signup">Signup</div>
+			</div>
+			<div class="modal_box_footer" style="height: 55px;">
+				<div id="auth_box_cancel">Cancel</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="login_modal_box" class="modal_box">
+			<div class="modal_box_header">Login</div>
+			<div class="modal_box_contents">
+				<div id="login_form_email" class="modal_input_container"><input class="modal_input" type="text" placeholder="Email" /></div>
+				<div id="login_form_password" class="modal_input_container" style="margin-top: 15px;"><input class="modal_input" type="password" placeholder="Password" /></div>
+			</div>
+			<div class="modal_box_footer">
+				<div class="button modal_box_footer_next" id="login_modal_box_login">Login</div>
+				<div class="button modal_box_footer_cancel" id="login_modal_box_cancel">Cancel</div>
+			</div>
+		</div>
+		<div id="signup_modal2" class="modal_box" style="margin-top: 10%;{% if u_logged_in.is_authenticated and u_logged_in.affiliation == None %}display: block;{% endif %}">
+			<form id="signup_additional_form">
+				<input type="hidden" id="signup_additional_affiliation" /> <!-- UC Berkeley Affiliation -->
+				<input type="hidden" id="signup_additional_status" /> <!-- Current Student Only: UC Berkeley Status  -->
+				<input type="hidden" id="signup_additional_gradyear" /> <!-- Current Student and Graduates Only: Graduation Year  -->
+				<input type="hidden" id="signup_additional_major" /> <!-- Current Student and Graduates Only: Major  -->
+				<input type="hidden" id="signup_additional_certificate" /> <!-- Graduates Only: Received Certificate? -->
+				<input type="hidden" id="signup_additional_department" /> <!-- Scholars Only: Deparment -->
+				<input type="hidden" id="signup_additional_appellation" /> <!-- Scholars Only: Appellation -->
+				<input type="hidden" id="signup_additional_title" /> <!-- Staff Only: Title -->
+				
+				<input type="hidden" id="signup_additional_background" /> <!-- Background -->
+				<input type="hidden" id="signup_additional_tags" /> <!-- Tags (Companies worked on, Companies invested in, Areas of expertise, etc. -->
+				
+				<input type="hidden" id="signup_additional_interest" /> <!-- Interest -->
+			</form>
+			<div id="signup_modal2_header">
+				<div id="signup_modal2_greet">Hi {{u_logged_in.get_short_name}}!</div>
+				<div id="signup_modal2_caption">Help us get to know you better.</div>
+			</div>
+			<div id="signup_modal2_progress">
+				<div id="signup_modal2_progress_content">
+					<div id="signup_modal2_progress_bar_current"></div>
+					<div id="signup_modal2_progress_bar"></div>
+					<div class="signup_modal2_progress_item" id="signup_modal2_progress_item_1">
+						<div class="signup_modal2_progress_item_dot signup_modal2_progress_item_dot_active"></div>
+						<div class="signup_modal2_progress_item_text">Basic Information</div>
+					</div>
+					<div class="signup_modal2_progress_item" id="signup_modal2_progress_item_2">
+						<div class="signup_modal2_progress_item_dot signup_modal2_progress_item_dot_active"></div>
+						<div class="signup_modal2_progress_item_text">UCB Status</div>
+					</div>
+					<div class="signup_modal2_progress_item" id="signup_modal2_progress_item_3">
+						<div class="signup_modal2_progress_item_dot"></div>
+						<div class="signup_modal2_progress_item_text">Background</div>
+					</div>
+					<div class="signup_modal2_progress_item" id="signup_modal2_progress_item_4">
+						<div class="signup_modal2_progress_item_dot"></div>
+						<div class="signup_modal2_progress_item_text">Interest</div>
+					</div>
+					<div class="signup_modal2_progress_item" id="signup_modal2_progress_item_5">
+						<div class="signup_modal2_progress_item_dot"></div>
+						<div class="signup_modal2_progress_item_text">Finish</div>
+					</div>
+				</div>
+			</div>
+			<div id="signup_modal2_content">
+				<div class="signup_modal2_step" id="signup_modal2_step_2" style="display: block;">
+					<div class="signup_modal2_section_container" id="signup_modal2_section_container_2_1">
+						<div class="signup_modal2_section" id="signup_modal2_section_2" style="display: block;">
+							<div class="signup_modal2_question">What is your UC Berkeley affiliation?</div>
+							<div class="signup_modal2_choices">
+								<div class="signup_modal2_choices_item" id="signup_modal2_choices_item_2_1">Current Student</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin" id="signup_modal2_choices_item_2_2">Alumni</div>
+								<div class="signup_modal2_choices_item" id="signup_modal2_choices_item_2_3">Professor/Visiting Scholar</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin" id="signup_modal2_choices_item_2_4">Staff</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<div class="signup_modal2_section_container" id="signup_modal2_section_container_2_2">
+						<div class="signup_modal2_section" id="signup_modal2_section_2_1">
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Current Status</div>
+						<div class="signup_modal2_choices">
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable" id="signup_modal2_status_1">Undergraduate</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin signup_modal2_choices_selectable"  id="signup_modal2_status_2">Graduate</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable"  id="signup_modal2_status_3">Researcher</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Year of anticipated graduation or completion of post-doc</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_gradyear" /></div>
+					</div>
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Major</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_major" /></div>
+					</div>
+				</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_2_2">
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Did you receive a CET Certificate?</div>
+						<div class="signup_modal2_choices">
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable" id="signup_modal2_certificate_1">Yes</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin signup_modal2_choices_selectable"  id="signup_modal2_certificate_2">No</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Year of graduation</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_gradyear_alum" /></div>
+					</div>
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Major</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_major_alum" /></div>
+					</div>
+				</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_2_3">
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Appellation</div>
+						<div class="signup_modal2_choices">
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable" id="signup_modal2_appellation_1">Adjunct</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin signup_modal2_choices_selectable"  id="signup_modal2_appellation_2">Associate</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable"  id="signup_modal2_appellation_3">Full</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin signup_modal2_choices_selectable"  id="signup_modal2_appellation_4">Teaching</div>
+							<div class="signup_modal2_choices_item signup_modal2_choices_selectable"  id="signup_modal2_appellation_5">Visiting</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Department</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_department" /></div>
+					</div>
+				</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_2_4">
+					<div class="signup_modal2_subquestion">
+						<div class="signup_modal2_subquestion_caption">Title</div>
+						<div class="signup_modal2_subquestion_input"><input type="text" id="signup_modal2_title" /></div>
+					</div>
+				</div>
+					</div>
+				</div>
+				<div class="signup_modal2_step" id="signup_modal2_step_3">
+					<div class="signup_modal2_section_container" id="signup_modal2_section_container_3_1">
+						<div class="signup_modal2_section" id="signup_modal2_section_3" style="display: block;">
+							<div class="signup_modal2_question">What is your background? (currently or previously)</div>
+							<div class="signup_modal2_choices">
+								<div class="signup_modal2_choices_item" id="signup_modal2_choices_item_3_1">Entrepreneur</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin" id="signup_modal2_choices_item_3_2">Angel Investor</div>
+								<div class="signup_modal2_choices_item" id="signup_modal2_choices_item_3_3">Venture Capitalist</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_nomargin" id="signup_modal2_choices_item_3_4">Consultant</div>
+								<div class="signup_modal2_choices_item" id="signup_modal2_choices_item_3_5">Technologist</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<div class="signup_modal2_section_container" id="signup_modal2_section_container_3_2">
+						<div class="signup_modal2_section" id="signup_modal2_section_3_1">
+							<div class="signup_modal2_question">Which company(s) were you involved with?</div>
+							<div class="signup_modal2_tagfield">
+								<form class="signup_modal2_tag_form">
+									<input type="text" class="signup_modal2_tag_input" />
+									<div class="signup_modal2_tag_form_guide">Press "Enter"</div>
+								</form>
+							</div>
+						</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_3_2">
+							<div class="signup_modal2_question">Which company(s) did you invest in?</div>
+							<div class="signup_modal2_tagfield">
+								<form class="signup_modal2_tag_form">
+									<input type="text" class="signup_modal2_tag_input" />
+								</form>
+							</div>
+						</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_3_3">
+							<div class="signup_modal2_question">Which company(s) did you invest in?</div>
+							<div class="signup_modal2_tagfield">
+								<form class="signup_modal2_tag_form">
+									<input type="text" class="signup_modal2_tag_input" />
+								</form>
+							</div>
+						</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_3_4">
+							<div class="signup_modal2_question">What is(are) your area of expertise?</div>
+							<div class="signup_modal2_tagfield">
+								<form class="signup_modal2_tag_form">
+									<input type="text" class="signup_modal2_tag_input" />
+								</form>
+							</div>
+						</div>
+						<div class="signup_modal2_section" id="signup_modal2_section_3_5">
+							<div class="signup_modal2_question">What is(are) your area of technical expertise?</div>
+							<div class="signup_modal2_tagfield">
+								<form class="signup_modal2_tag_form">
+									<input type="text" class="signup_modal2_tag_input" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="signup_modal2_step" id="signup_modal2_step_4">
+					<div class="signup_modal2_section_container">
+						<div class="signup_modal2_section" id="signup_modal2_section_4" style="display: block;">
+							<div class="signup_modal2_question">Would you like to be any of the following?</div>
+							<div class="signup_modal2_choices">
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_finish" id="signup_modal2_choices_item_4_1">Mentor</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_finish signup_modal2_choices_item_nomargin" id="signup_modal2_choices_item_4_2">Speaker</div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_finish" id="signup_modal2_choices_item_4_3">Lecturer</div>
+								<div class="clear"></div>
+								<div class="signup_modal2_choices_item signup_modal2_choices_item_finish signup_modal2_choices_item_large" id="signup_modal2_choices_item_4_0">No, Thanks.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="signup_modal2_step" id="signup_modal2_step_5">
+					<div class="signup_modal2_section_container">
+						<div class="signup_modal2_section" id="signup_modal2_section_5" style="display: block;">
+							<div id="signup_modal2_finish_hero">Welcome to CET Network.</div>
+							<div id="signup_modal2_finish_subhero">Thank you for signing up for CET. You can now connect with entrepreneurs in Berkeley and the Bay Area through the CET Network.</div>
+							<div class="signup_modal2_finish_task" style="display: none;">Start the Walkthrough</div>
+							<a href="/dashboard"><div class="signup_modal2_finish_task">Complete my Profile</div></a>
+							<div class="signup_modal2_finish_task" id="signup_modal2_finish_done">Done</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="signup_modal2_footer">
+				<div id="signup_modal2_back" data-state="1">Back</div>
+				<div id="signup_modal2_cancel">Cancel</div>
+				<div id="signup_modal2_next" data-state="2">Next</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="signup_modal_box" class="modal_box">
+			<div class="modal_box_header">Signup for CET</div>
+			<div id="signup_modal_box_contents_container">
+				<div id="signup_modal_box_contents">
+					<div class="signup_modal_box_contents_section">
+						<div id="signup_form_name">
+							<div id="signup_form_firstname"><input class="modal_input" type="text" placeholder="First Name" /></div>
+							<div id="signup_form_lastname"><input class="modal_input" type="text" placeholder="Last Name" /></div>
+						</div>
+						<div id="signup_form_email"><input class="modal_input" type="text" placeholder="Email" /></div>
+						<div id="signup_form_password"><input class="modal_input" type="password" placeholder="Password" /></div>
+						<div id="signup_form_confirm"><input class="modal_input" type="password" placeholder="Confirm Password" /></div>
+					</div>
+					<div class="signup_modal_box_contents_section">
+						<div class="signup_form_usertype_box" style="background-color: #4989DA;" data-usertype="student">
+							<div class="signup_form_usertype_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/student.svg" /></div>
+							<div class="signup_form_usertype_title">Student</div>
+							<div class="signup_form_usertype_label">For UC Berkeley students pursuing or interested in entrepreneurship.</div>
+							<div class="signup_form_usertype_check">
+								<div class="signup_form_usertype_check_icon">
+									<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+								</div>
+							</div>
+						</div>
+						<div class="signup_form_usertype_box" style="background-color: #DA4F49;" data-usertype="industry">
+							<div class="signup_form_usertype_icon" style="padding-top: 20px;"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/industry.svg" /></div>
+							<div class="signup_form_usertype_title" style="padding-top: 8px;">Industry</div>
+							<div class="signup_form_usertype_label">For industry-personnel seeking investment, recruitment, or partnership.</div>
+							<div class="signup_form_usertype_check signup_form_usertype_selected">
+								<div class="signup_form_usertype_check_icon">
+									<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+								</div>
+							</div>
+						</div>
+						<div class="signup_form_usertype_box" style="background-color: #5BB75C; margin-right: 0px;" data-usertype="mentor">
+							<div class="signup_form_usertype_icon" style="width: 45px; padding-top: 15px;"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/mentor.svg" /></div>
+							<div class="signup_form_usertype_title" style="padding-top: 5px;">Mentors</div>
+							<div class="signup_form_usertype_label">For people with experience in entrepreneurship who wants to guide students in their venture.</div>
+							<div class="signup_form_usertype_check signup_form_usertype_selected">
+								<div class="signup_form_usertype_check_icon">
+									<img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal_box_footer">
+				<div class="button modal_box_footer_next" id="signup_modal_box_next" data-state="1">Next</div>
+				<div class="button modal_box_footer_cancel" id="signup_modal_box_cancel" >Cancel</div>
+			</div>
+		</div>
+	</div>
+	<div id="container">
+		<a href="mailto:roka371@gmail.com,abhi.kalakuntla@gmail.com,rnanda1243@gmail.com"><div id="feedback">
+			<div id="feedback_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feedback.svg" /></div>
+			<div id="feedback_caption">Send Feedback</div>
+		</div></a>
+		<div id="left_container">
+			<div id="menu">
+				<a href="/">
+					<div id="menu_header">
+						<div id="menu_header_logo"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/cet_logo.png" /></div>
+						<div id="menu_header_title">CET</div>
+						<div class="clear"></div>
+					</div>
+				</a>
+				<div class="menu_section">Connect</div>
+				{% if content == "Connect" or content == "User Profile" or content == "Company Profile" %}
+				<a href="/connect"><div class="menu_item menu_item_nohover {% if not u_logged_in.is_authenticated %}menu_item_auth{% endif %}">
+				{% else %}
+				<a href="/connect"><div class="menu_item {% if not u_logged_in.is_authenticated %}menu_item_auth{% endif %}">
+				{% endif %}
+					<div class="menu_item_icon" style="width: 16px; margin-top: 1px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/connect.svg"/></div>
+					<div class="menu_item_text">The Players</div>
+					<div class="clear"></div>
+					{% if content == "Connect" or content == "User Profile" or content == "Company Profile" %}
+					<div id="submenu">
+						<div id="submenu_arrow"></div>
+						<a href="/connect/following/"><div class="submenu_item" style="font-weight: 500;display:none;">Following</div></a>
+						<a href="/connect/entrepreneurs/"><div class="submenu_item">Entrepreneurs</div></a>
+						<a href="/connect/angelinvestors/"><div class="submenu_item">Angel Investors</div></a>
+						<a href="/connect/venturecapitalists/"><div class="submenu_item">Venture Capitalists</div></a>
+						<a href="/connect/consultants/"><div class="submenu_item">Consultants</div></a>
+						<a href="/connect/technologists/"><div class="submenu_item">Technologists</div></a>
+						<div class="submenu_item" style="display:none;">Startups</div>
+					</div>
+					{% endif %}
+					{% if not u_logged_in.is_authenticated %}
+					<div class="auth_indicator"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/key.svg"/></div>
+					{% endif %}
+				</div></a>
+				<a href="/feed"><div class="menu_item {% if not u_logged_in.is_authenticated %}menu_item_auth{% endif %} {% if content == "Feed" %}menu_item_nohover{% endif %}">
+					<div class="menu_item_icon" style="width: 16px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_grey.svg"/></div>
+					<div class="menu_item_text">Exchange</div>
+					<div class="clear"></div>
+					{% if content == "Feed" %}
+					<div id="submenu">
+						<div id="submenu_arrow"></div>
+						<a href="/feed/following"><div class="submenu_item" style="font-weight: 500;">Following</div></a>
+						<a href="/feed/text"><div class="submenu_item">Free Posts</div></a>
+						<a href="/feed/event"><div class="submenu_item">Events</div></a>
+						<a href="/feed/team"><div class="submenu_item">Team Building</div></a>
+						<a href="/feed/startup"><div class="submenu_item">Startup Posting</div></a>
+						<a href="/feed/mentoring"><div class="submenu_item">Mentoring</div></a>
+						<a href="/feed/fundraising"><div class="submenu_item">Fundraising</div></a>
+					</div>
+					{% endif %}
+					{% if not u_logged_in.is_authenticated %}
+					<div class="auth_indicator"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/key.svg"/></div>
+					{% endif %}
+				</div></a>
+				<div class="menu_section">Learn</div>
+				<a href="/about"><div class="menu_item {% if content == "About" %}menu_item_nohover{% endif %}">
+					<div class="menu_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/about.svg"/></div>
+					<div class="menu_item_text">About Us</div>
+					<div class="clear"></div>
+					{% if content == "About" %}
+					<div id="submenu">
+						<div id="submenu_arrow"></div>
+						<a href="#about_ourstory"><div class="submenu_item">Our Story</div></a>
+						<a href="#about_ourteam"><div class="submenu_item">Our Team</div></a>
+						<a href="#about_madeby"><div class="submenu_item">Made by...</div></a>
+						<a href="#about_showcase"><div class="submenu_item">Featured Companies</div></a>
+						<a href="#about_contacts"><div class="submenu_item">Contact Us</div></a>
+					</div>
+					{% endif %}
+				</div></a>
+				<a href="/curriculum"><div class="menu_item {% if content == "Curriculum" %}menu_item_nohover{% endif %}">
+					<div class="menu_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/curriculum.svg"/></div>
+					<div class="menu_item_text">Curriculum</div>
+					<div class="clear"></div>
+					{% if content == "Curriculum" %}
+					<div id="submenu">
+						<div id="submenu_arrow"></div>
+						<a href="#curriculum_berkeleymethod"><div class="submenu_item">The Berkeley Method</div></a>
+						<a href="#curriculum_sequence"><div class="submenu_item">Curriculum Sequence</div></a>
+						<a href="#curriculum_venturelab"><div class="submenu_item">Venture Lab</div></a>
+					</div>
+					{% endif %}
+				</div></a>
+				<a href="/global"><div class="menu_item {% if content == "Global" %}menu_item_nohover{% endif %}">
+					<div class="menu_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/global.svg"/></div>
+					<div class="menu_item_text">Global Programs</div>
+					<div class="clear"></div>
+					{% if content == "Global" %}
+					<div id="submenu">
+						<div id="submenu_arrow"></div>
+						<a href="#global_gte"><div class="submenu_item">Tsinghua-Berkeley GTE Center</div></a>
+						<a href="#global_aii"><div class="submenu_item">Applied Innovations Institute</div></a>
+						<a href="#global_glvn"><div class="submenu_item">Global Venture Lab Network</div></a>
+					</div>
+					{% endif %}
+				</div></a>
+			</div>
+			{% if u_logged_in.is_authenticated %}
+			<div id="menu_user_container">
+				<div id="menu_user">
+					<div id="menu_user_thumbnail">
+						<img class="img_scaled_wh" src="{{u_logged_in.get_user_profile_url}}" />
+						<div id="menu_user_editprofilepic">
+							<input id="menu_user_editprofilepic_upload" type="file" onchange="edit_profilepic(this);" />
+							<img class="img_scaled" src="{{STATIC_URL}}assets/icons/upload.svg" />
+						</div>
+					</div>
+					<a href="/dashboard/"><div id="menu_user_info">
+						<div id="menu_user_username">{{u_logged_in.get_full_name}}</div>
+						<div id="menu_user_followers">{{u_logged_in.get_follower_count}} Follower{% if not u_logged_in.get_follower_count == 1 %}s{%endif%}</div>
+					</div></a>
+					<div class="clear"></div>
+				</div>
+				<a href="/connect/companies/"><div id="mycompanies">My Companies</div></a>
+				<div id="addcompany">Create Company</div> {% comment %} Hey Shawn -- style this. Id is the same. {% endcomment %}
+				<a href="/logout/">
+					<div id="logout">
+						<div id="logout_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/key_light.svg" /></div>
+						<div id="logout_caption">Logout</div>
+					</div>
+				</a>
+			</div>
+			{% endif %}
+		</div>
+		{% block content %}
+		
+    	{% endblock content %}
+	</div>
+</body>
+</html>

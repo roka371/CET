@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<!--load stylesheets, favicon, and scripts-->
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}style_panel.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}jquery-1.8.3.min.js" charset="utf-8"></script>
+    <script src="{{STATIC_URL}}jquery-ui-1.9.2.min.js"></script>
+    <script src="{{STATIC_URL}}jquery_masonry_min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}script_panel.js" charset="utf-8"></script>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>CET 2.0 | Panel</title>
+</head>
+<body>
+
+<div id="header">
+	<div id="title">
+		<div id="title_large">CET 2.0</div>
+		<div id="title_medium">Panel</div>
+	</div>
+	<div id="nav">
+		<a href="/admin/users"><div id="nav_item_users" class="nav_item">Users</div></a>
+		<a href="/admin/posts"><div id="nav_item_posts" class="nav_item">Posts</div></a>
+		<a href="/admin/certificate"><div id="nav_item_certificates" class="nav_item" style="border-bottom: 1px solid #DA4F49;">Certificates</div></a>
+		<a href="/admin/content/about"><div id="nav_item_content" class="nav_item">Content</div></a>
+	</div>
+</div>
+<div id="main">
+	<div id="content">
+		<table class="cetapp_table table table-hover">
+			<thead>
+			<tr class="cetapp_table_row cetapp_table_header_row">
+				<td class="cetapp_table_headcell">SID</td>
+				<td class="cetapp_table_headcell">Name</td>
+				<td class="cetapp_table_headcell">Status</td>
+				<td class="cetapp_table_headcell">Email</td>
+				<td class="cetapp_table_headcell">Phone Number</td>
+				<td class="cetapp_table_headcell">Delivery</td>
+				<td class="cetapp_table_headcell">Coursework</td>
+				<td class="cetapp_table_headcell">Major</td>
+				<td class="cetapp_table_headcell">Address</td>
+				<td class="cetapp_table_headcell">Comments</td>
+			</tr>
+			</thead>
+			<tbody>
+				{% for certificate in certificates %}
+					{% include "components/panel_certificate_item.html" %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</body>
+</html>

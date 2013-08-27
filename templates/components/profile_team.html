@@ -1,0 +1,68 @@
+<!--
+
+Component for Dashboard Profile - Team Box.
+Takes in a team member's Name, Position, and Description as parameters.
+By default (first-time generated), all of the values are "undefined". 
+
+-->
+
+<!--
+
+For each Team a company has, output following:
+-->
+
+<div id="dashboard_profile_box_temp" class="dashboard_profile_box" {% if is_new %} data-id="0" {% else %} data-id="{{member.id}}" {% endif %}>
+	{% if c_editable %}
+		<div class="dashboard_profile_edit button">
+			<img class="img_scaled" src="{{STATIC_URL}}assets/icons/edit.svg" />
+		</div>	
+		<div class="dashboard_profile_editor" {% if is_new %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+			<div class="dashboard_profile_editor_cover">
+				<input class="dashboard_profile_editor_cover_upload" type="file" />
+				{% if is_new %}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{% elif member.get_company_member_profile_url %}
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: block;" src= "{{member.get_company_member_profile_url}}" /></div>
+				{%else%}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{%endif%}
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_name">
+				<div class="dashboard_profile_editor_item_label">Name</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{member.companymember_name}}" value="{{member.companymember_name}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_position">
+				<div class="dashboard_profile_editor_item_label">Position</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{member.companymember_position}}" value="{{member.companymember_position}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_description">
+				<div class="dashboard_profile_editor_item_label">Description</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<textarea class="dashboard_profile_editor_item_input dashboard_profile_editor_item_textarea" data-original="{{member.companymember_description}}">{{member.companymember_description}}</textarea>
+			</div>
+			<div class="dashboard_profile_editor_toolbox">
+				<div class="dashboard_profile_editor_submit button" data-type="Team">Done</div>
+				<div class="dashboard_profile_editor_cancel {% if is_new %}dashboard_profile_editor_cancel_temp{% endif %} button" data-type="Team">Cancel</div>
+			</div>
+		</div>
+	{% endif %}
+	
+	
+	<div class="dashboard_profile_box_entry" {% if is_new %} style="display: none;" {% else %} style="display: block;" {% endif %}>
+		<div class="dashboard_profile_box_cover">
+			<div class="dashboard_profile_box_overlay"></div>
+			<img class="img_scaled" src="{{member.get_company_member_profile_url}}" />
+			<div class="dashboard_profile_box_thumbnail dashboard_profile_box_thumbnail_user"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/profile.jpg" /></div>
+		</div>
+		<div class="dashboard_profile_box_contents">
+			<div class="dashboard_profile_box_header dashboard_profile_box_name">{{member.companymember_name}}</div>
+			<div class="dashboard_profile_box_subheader dashboard_profile_box_position">{{member.companymember_position}}</div>
+			<div class="dashboard_profile_box_divider"></div>
+			<div class="dashboard_profile_box_description">{{member.companymember_description}}</div>
+		</div>
+	</div>
+</div>

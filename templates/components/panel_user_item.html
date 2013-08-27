@@ -1,0 +1,64 @@
+<div class="item" id="user_{{user.id}}">
+	<a href="/user/{{user.id}}" target="_blank">
+		<div class="item_thumbnail"><img class="img_scaled" src="{{user.get_user_profile_url}}" /></div>
+		<div class="item_info">
+			<div class="item_name">{{user.first_name}} {{user.last_name}}</div>
+			<div class="item_date">Joined on {{user.get_join_date}}</div>
+		</div>
+	</a>
+	<div class="item_toolbox">
+		<div class="user_toolbox_delete item_toolbox_item">
+			<div class="item_toolbox_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/x.svg" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Delete User</div>
+			</div>
+		</div>
+		<div class="user_toolbox_flag item_toolbox_item" {% if not user.is_active %} data-flagged="true" {% else %} data-flagged="false" {% endif %}>
+			<div class="item_toolbox_active" {% if not user.is_active %} style="display: block;" {% endif %}></div>
+			<div class="item_toolbox_item_icon" style="background: #E67E22;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/flag.svg" style="margin-top: 1px; margin-left: 2px;" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Mark as Flagged</div>
+			</div>
+		</div>
+		<div class="user_toolbox_feature item_toolbox_item" {% if user.user_featured %} data-featured="true" {% else %} data-featured="false" {% endif %}>
+			<div class="item_toolbox_active" {% if user.user_featured %} style="display: block;" {% endif %}></div>
+			<div class="item_toolbox_item_icon" style="background: #4989DA;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/favorite.svg" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Mark as Featured</div>
+			</div>
+		</div>
+		<a href="mailto:{{user.email}}">
+			<div class="item_toolbox_email item_toolbox_item">
+				<div class="item_toolbox_item_icon" style="background: #5BB75C;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/mail.svg" /></div>
+				<div class="item_toolbox_caption">
+					<div class="item_toolbox_caption_arrow"></div>
+					<div class="item_toolbox_caption_text">Send an Email</div>
+				</div>
+			</div>
+		</a>
+		<div class="clear"></div>
+	</div>
+	<div class="item_stats">
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{user.login_count}}</div>
+			<div class="item_stats_caption">Logins</div>
+		</div>
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{user.get_posts_as_list.count}}</div>
+			<div class="item_stats_caption">Posts</div>
+		</div>
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{user.get_follower_count}}</div>
+			<div class="item_stats_caption">Followers</div>
+		</div>
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{user.get_following_count}}</div>
+			<div class="item_stats_caption">Following</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>

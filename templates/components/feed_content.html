@@ -1,0 +1,15 @@
+{% for post in posts %}
+	{% if post.post_type == 0 %}
+		{% include "components/post_text.html" %}
+	{% elif post.post_type == 1 %}
+		{% include "components/post_event.html" %}
+	{% elif post.post_type == 2 %}
+		{% include "components/post_team.html" %}
+	{% elif post.post_type == 3 %}
+		{% include "components/post_startup.html" %}
+	{% elif post.post_type == 4 %}
+		{% include "components/post_mentor.html" %}
+	{% elif post.post_type == 5 %}
+		{% include "components/post_investment.html" %}
+	{% endif %}
+{% endfor %}

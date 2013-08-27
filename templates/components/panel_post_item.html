@@ -1,0 +1,62 @@
+<div class="item" id="post_{{post.id}}">
+	
+
+	
+	{% if post.post_type == 0 %}
+	<div class="item_thumbnail" style="background: #4989DA;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_text.svg" /></div>
+	{% elif post.post_type == 1 %}
+	<div class="item_thumbnail" style="background: #9B59B6;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_event.svg" /></div>
+	{% elif post.post_type == 2 %}
+	<div class="item_thumbnail" style="background: #16A085;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_team.svg" /></div>
+	{% elif post.post_type == 3 %}
+	<div class="item_thumbnail" style="background: #E67E22;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_startup.svg" /></div>
+	{% elif post.post_type == 4 %}
+	<div class="item_thumbnail" style="background: #5BB75C;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_mentor.svg" /></div>
+	{% elif post.post_type == 5 %}
+	<div class="item_thumbnail" style="background: #DA4F49;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/feed_investment.svg" /></div>
+	{% endif %}
+
+	<div class="item_info">
+		<div class="item_title">{{post.post_title}}</div>
+		<div class="item_author">{{post.post_author.get_full_name}}</div>
+		<div class="item_date">{{post.get_timestamp}}</div>
+	</div>
+	<div class="item_toolbox">
+		<div class="post_toolbox_delete item_toolbox_item">
+			<div class="item_toolbox_item_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/x.svg" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Delete Post</div>
+			</div>
+		</div>
+		<div class="post_toolbox_flag item_toolbox_item" {% if post.post_flagged %} data-flagged="true" {% else %} data-flagged="false" {% endif %}>
+			<div class="item_toolbox_active" {% if post.post_flagged %} style="display: block;" {% endif %}></div>
+			<div class="item_toolbox_item_icon" style="background: #E67E22;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/flag.svg" style="margin-top: 1px; margin-left: 2px;" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Mark as Flagged</div>
+			</div>
+		</div>
+		<div class="post_toolbox_feature item_toolbox_item" {% if post.post_featured %} data-featured="true" {% else %} data-featured="false" {% endif %}>
+			<div class="item_toolbox_active" {% if post.post_featured %} style="display: block;" {% endif %}></div>
+			<div class="item_toolbox_item_icon" style="background: #4989DA;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/favorite.svg" /></div>
+			<div class="item_toolbox_caption">
+				<div class="item_toolbox_caption_arrow"></div>
+				<div class="item_toolbox_caption_text">Mark as Featured</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="item_stats">
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{post.get_like_count}}</div>
+			<div class="item_stats_caption">Likes</div>
+		</div>
+		<div class="item_stats_column">
+			<div class="item_stats_count">{{post.get_comment_count}}</div>
+			<div class="item_stats_caption">Comments</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>

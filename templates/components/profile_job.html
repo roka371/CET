@@ -1,0 +1,103 @@
+<!--
+
+Component for Dashboard Profile - Job Box.
+Takes in Company, Position, Time Period (Month From, Year From, Month To, and Year To), and Description as parameters.
+By default (first-time generated), all of the values are "undefined". 
+
+-->
+
+<div class="dashboard_profile_box" {% if is_new %} data-id="0" {% else %} data-id="{{job.id}}" {% endif %} user-id="{{user.id}}">
+	{% if u_logged_in.id == user.id %}
+		<div class="dashboard_profile_edit button">
+			<img class="img_scaled" src="{{STATIC_URL}}assets/icons/edit.svg" />
+		</div>
+		<div class="dashboard_profile_editor" {% if is_new %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+			<div class="dashboard_profile_editor_cover">
+				<input class="dashboard_profile_editor_cover_upload" type="file" />
+				{% if is_new %}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{% elif job.get_job_picture_url %}
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: block;" src= "{{job.get_job_picture_url}}" /></div>
+				{%else%}
+					<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+					<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" src= "" /></div>
+				{%endif%}
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_company">
+				<div class="dashboard_profile_editor_item_label">Company</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{job.job_company}}" value="{{job.job_company}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_position">
+				<div class="dashboard_profile_editor_item_label">Position</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<input class="dashboard_profile_editor_item_input" data-original="{{job.job_position}}" value="{{job.job_position}}" />
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_timeperiod">
+				<div class="dashboard_profile_editor_item_label">Time Period</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<div class="dashboard_profile_editor_item_input" style="width: 450px;">
+					<div class="dashboard_profile_editor_item_select_label">From</div>
+					<select class="dashboard_profile_editor_item_select dashboard_profile_editor_item_from_month" data-original="{{job.get_job_start_month_display}}" type="singleselect">
+						<option value="">Month</option>
+						<option value="Jan" {% if job.get_job_start_month_display == 'Jan'%} selected="selected" {% endif %}>January</option>
+						<option value="Feb" {% if job.get_job_start_month_display == 'Feb'%} selected="selected" {% endif %}>February</option>
+						<option value="Mar" {% if job.get_job_start_month_display == 'Mar'%} selected="selected" {% endif %}>March</option>
+						<option value="Apr" {% if job.get_job_start_month_display == 'Apr'%} selected="selected" {% endif %}>April</option>
+						<option value="May" {% if job.get_job_start_month_display == 'May'%} selected="selected" {% endif %}>May</option>
+						<option value="Jun" {% if job.get_job_start_month_display == 'Jun'%} selected="selected" {% endif %}>June</option>
+						<option value="Jul" {% if job.get_job_start_month_display == 'Jul'%} selected="selected" {% endif %}>July</option>
+						<option value="Aug" {% if job.get_job_start_month_display == 'Aug'%} selected="selected" {% endif %}>August</option>
+						<option value="Sep" {% if job.get_job_start_month_display == 'Sep'%} selected="selected" {% endif %}>September</option>
+						<option value="Oct" {% if job.get_job_start_month_display == 'Oct'%} selected="selected" {% endif %}>October</option>
+						<option value="Nov" {% if job.get_job_start_month_display == 'Nov'%} selected="selected" {% endif %}>November</option>
+						<option value="Dec" {% if job.get_job_start_month_display == 'Dec'%} selected="selected" {% endif %}>December</option>
+					</select>
+					<input class="dashboard_profile_editor_item_input_inner dashboard_profile_editor_item_from_year" {% if job.job_start_year %} data-original="{{job.job_start_year}}" value="{{job.job_start_year}}" {% else %} data-original="" value="Year" {% endif %}/>
+					<div class="dashboard_profile_editor_item_select_label">To</div>
+					<select class="dashboard_profile_editor_item_select dashboard_profile_editor_item_to_month" data-original="{{job.get_job_end_month_display}}" type="singleselect">
+						<option value="">Month</option>
+						<option value="Jan" {% if job.get_job_end_month_display == 'Jan'%} selected="selected" {% endif %}>January</option>
+						<option value="Feb" {% if job.get_job_end_month_display == 'Feb'%} selected="selected" {% endif %}>February</option>
+						<option value="Mar" {% if job.get_job_end_month_display == 'Mar'%} selected="selected" {% endif %}>March</option>
+						<option value="Apr" {% if job.get_job_end_month_display == 'Apr'%} selected="selected" {% endif %}>April</option>
+						<option value="May" {% if job.get_job_end_month_display == 'May'%} selected="selected" {% endif %}>May</option>
+						<option value="Jun" {% if job.get_job_end_month_display == 'Jun'%} selected="selected" {% endif %}>June</option>
+						<option value="Jul" {% if job.get_job_end_month_display == 'Jul'%} selected="selected" {% endif %}>July</option>
+						<option value="Aug" {% if job.get_job_end_month_display == 'Aug'%} selected="selected" {% endif %}>August</option>
+						<option value="Sep" {% if job.get_job_end_month_display == 'Sep'%} selected="selected" {% endif %}>September</option>
+						<option value="Oct" {% if job.get_job_end_month_display == 'Oct'%} selected="selected" {% endif %}>October</option>
+						<option value="Nov" {% if job.get_job_end_month_display == 'Nov'%} selected="selected" {% endif %}>November</option>
+						<option value="Dec" {% if job.get_job_end_month_display == 'Dec'%} selected="selected" {% endif %}>December</option>
+					</select>
+					<input class="dashboard_profile_editor_item_input_inner dashboard_profile_editor_item_to_year" {% if not job.job_end_year == 0 %} data-original="{{job.job_end_year}}" value="{{job.job_end_year}}" {% else %} data-original="" value="Year" {% endif %} style="margin: 0px;" />
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="dashboard_profile_editor_item dashboard_profile_editor_description">
+				<div class="dashboard_profile_editor_item_label">Description</div>
+				<div class="dashboard_profile_editor_item_arrow"></div>
+				<textarea class="dashboard_profile_editor_item_input dashboard_profile_editor_item_textarea" data-original="{{job.job_description}}">{{job.job_description}}</textarea>
+			</div>
+			<div class="dashboard_profile_editor_toolbox">
+				<div class="dashboard_profile_editor_submit" data-type="Job">Done</div>
+				<div class="dashboard_profile_editor_cancel {% if is_new %}dashboard_profile_editor_cancel_temp{% endif %}" data-type="Job">Cancel</div>
+			</div>
+		</div>
+	{% endif %}
+	<div class="dashboard_profile_box_entry" {% if is_new %} style="display: none;" {% else %} style="display: block;" {% endif %}>
+		<div class="dashboard_profile_box_cover">
+			<div class="dashboard_profile_box_overlay"></div>
+			<img class="img_scaled" src="{{job.get_job_picture_url}}" />
+			<div class="dashboard_profile_box_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/ego.png" /></div>
+		</div>
+		<div class="dashboard_profile_box_contents">
+			<div class="dashboard_profile_box_header dashboard_profile_box_company">{{job.job_company}}</div>
+			<div class="dashboard_profile_box_subheader dashboard_profile_box_position">{{job.job_position}}</div>
+			<div class="dashboard_profile_box_subheader dashboard_profile_box_timeperiod">{{job.get_job_timeperiod}}</div>
+			<div class="dashboard_profile_box_divider"></div>
+			<div class="dashboard_profile_box_description dashboard_profile_box_description">{{job.job_description}}</div>
+		</div>
+	</div>
+</div>

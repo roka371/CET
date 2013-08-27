@@ -1,0 +1,234 @@
+{% extends 'cet/template.html' %}
+{% block content %}
+<div id="contents" style="padding: 0px; background: white;">
+	<div id="contents_box">
+		<div id="apply_header">
+			<div id="apply_cover"><img class="img_scaled" src="{{STATIC_URL}}/assets/covers/apply_cover.jpg" /></div>
+			<div id="apply_header_box">
+				<div id="apply_title">Apply for CET Certification of Leadership</div>
+				<div id="apply_caption">The 6-unit CET Concentration in Engineering Leadership empowers students to become technology leaders through classroom and hands-on study of entrepreneurship and commercialization. Students not pursuing the concentration are welcome to enroll in individual classes.</div>
+			</div>
+		</div>
+		<div id="apply_contents">
+			<div id="apply_spine">
+				<div id="apply_spine_root"></div>
+				<div id="apply_spine_dot_header" class="apply_spine_dot"></div>
+			</div>
+			<div id="apply_form_item_sid" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title"><div class="apply_form_item_title_arrow"></div>Student ID</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_sid" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_firstname" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title"><div class="apply_form_item_title_arrow"></div>First Name</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_firstname" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_lastname" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title"><div class="apply_form_item_title_arrow"></div>Last Name</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_lastname" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_phone" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 35px;"><div class="apply_form_item_title_arrow"></div>Phone Number</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_phone" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_email" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 85px;"><div class="apply_form_item_title_arrow"></div>Email</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_email" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_major" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 85px;"><div class="apply_form_item_title_arrow"></div>Major</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_major" type="text" class="apply_form_item_input_text" />
+				</div>
+			</div>
+			<div id="apply_form_item_delivery" class="apply_form_item" style="height: 100px;">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 75px;"><div class="apply_form_item_title_arrow"></div>Delivery</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input" style="width: 280px;">
+					<div class="apply_form_item_input_arrow"></div>
+					<div id="apply_form_option_delivery_pickup" class="apply_form_item_input_option" style="margin-right: 15px;">
+						<div class="apply_form_item_input_option_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/office.svg" /></div>
+						<div class="apply_form_item_input_option_caption">Pickup from CET</div>
+						<div class="apply_form_item_input_option_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+					</div>
+					<div id="apply_form_option_delivery_mailed" class="apply_form_item_input_option">
+						<div class="apply_form_item_input_option_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/mail.svg" /></div>
+						<div class="apply_form_item_input_option_caption">Mailed</div>
+						<div class="apply_form_item_input_option_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+					</div>
+				</div>
+			</div>
+			<div id="apply_form_item_coursework" class="apply_form_item" style="height: 900px;">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 50px;">Coursework</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<div class="apply_form_item_input_grid">
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">E 198</div>
+							<div class="apply_form_item_input_grid_item_cname">Distinguished Innovator Lecture Series</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Unit, P/NP</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 191</div>
+							<div class="apply_form_item_input_grid_item_cname">Engineering Entrepreneurship</div>
+							<div class="apply_form_item_input_grid_item_cinfo">3 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 171</div>
+							<div class="apply_form_item_input_grid_item_cname">Technology Leadership</div>
+							<div class="apply_form_item_input_grid_item_cinfo">3 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190E</div>
+							<div class="apply_form_item_input_grid_item_cname">Mobile Applications</div>
+							<div class="apply_form_item_input_grid_item_cinfo">3 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190A</div>
+							<div class="apply_form_item_input_grid_item_cname">Berkeley Method of Entrepreneurship</div>
+							<div class="apply_form_item_input_grid_item_cinfo">2-3 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190C</div>
+							<div class="apply_form_item_input_grid_item_cname">Web 2.0</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1-2 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190F</div>
+							<div class="apply_form_item_input_grid_item_cname">Business Opportunities in Arts & Tech</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1-2 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190G</div>
+							<div class="apply_form_item_input_grid_item_cname">Patent Engineering</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1-2 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">IEOR 190D</div>
+							<div class="apply_form_item_input_grid_item_cname">Product Management</div>
+							<div class="apply_form_item_input_grid_item_cinfo">2 Unit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">E 120</div>
+							<div class="apply_form_item_input_grid_item_cname">Finance</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Unit, P/NP</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">LS</div>
+							<div class="apply_form_item_input_grid_item_cname">Leadership Institute Program</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">FS</div>
+							<div class="apply_form_item_input_grid_item_cname">FounderSchool</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">BMIC</div>
+							<div class="apply_form_item_input_grid_item_cname">Berkeley Mobile International Collaborative</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">VLC</div>
+							<div class="apply_form_item_input_grid_item_cname">Berkeley Venture Lab Competition</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">Skydeck</div>
+							<div class="apply_form_item_input_grid_item_cname">Skydeck Startup Accelerator</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1-2 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">UGBA 105</div>
+							<div class="apply_form_item_input_grid_item_cname">Intro Organizational Behavior</div>
+							<div class="apply_form_item_input_grid_item_cinfo">3 Units</div>
+						</div>
+						<div class="apply_form_item_input_grid_item">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">UGBA 103</div>
+							<div class="apply_form_item_input_grid_item_cname">Introduction to Finance</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+						<div class="apply_form_item_input_grid_item" style="margin-right: 0px">
+							<div class="apply_form_item_input_grid_item_checked"><img style="width: 60px;" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+							<div class="apply_form_item_input_grid_item_cnum">UGBA 131</div>
+							<div class="apply_form_item_input_grid_item_cname">Corporate Finance & Financial Statement Analysis</div>
+							<div class="apply_form_item_input_grid_item_cinfo">1 Elective Credit</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="apply_form_item_address" class="apply_form_item">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 60px;"><div class="apply_form_item_title_arrow"></div>Address</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<input id="apply_form_item_input_address" type="text" class="apply_form_item_input_text" style="width: 400px;" />
+				</div>
+			</div>
+			<div id="apply_form_item_comments" class="apply_form_item" style="height: 85px;">
+				<div class="apply_form_item_blank">You left this blank</div>
+				<div class="apply_form_item_title" style="left: 45px;"><div class="apply_form_item_title_arrow"></div>Comments</div>
+				<div class="apply_form_item_dot"></div>
+				<div class="apply_form_item_input">
+					<div class="apply_form_item_input_arrow"></div>
+					<textarea id="apply_form_item_input_comments" class="apply_form_item_input_text" style="width: 400px; height: 100px; resize: none;"></textarea>
+				</div>
+			</div>
+			<div id="apply_form_submit">
+				<div id="apply_form_submit_dot"></div>
+				<div id="apply_form_submit_arrow"></div>
+				<div id="apply_form_submit_icon"><img class="img_scaled" src="{{STATIC_URL}}/assets/icons/check.svg" /></div>
+				<div id="apply_form_submit_caption">Submit</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

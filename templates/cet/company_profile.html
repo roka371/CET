@@ -1,0 +1,458 @@
+{% extends 'cet/template.html' %}
+{% block content %}
+<div id="contents" style="padding: 0px; padding-top: 20px;">
+	
+	<div id="profile_header">
+		<div id="profile_thumbnail"><img class="img_scaled_wh" src="{{company.get_company_thumbnail_url}}" /></div>
+		<div id="profile_info">
+			<div id="profile_name">{{company.company_name}}</div>
+			<div id="profile_follower">{{c_follower_count}} Followers</div>
+		</div>
+		<div id="profile_toolbox">
+			<div id="profile_follow" class="profile_toolbox_item" style="width: 30px; height: 30px; padding: 15px;"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/follow.svg" /></div>
+			<div id="profile_follow_check"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/check.svg" /></div>
+			<div id="profile_message" class="profile_toolbox_item"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/mail.svg" /></div>
+		</div>
+	</div>
+	
+	<div id="dashboard_contents">
+		<div class="dashboard_profile_item" style="background-color: #f7f5f2;">
+			<div class="dashboard_profile_header">Description</div>
+			<div class="dashboard_profile_box">
+				
+				{% if c_editable %}
+					<div class="dashboard_profile_edit button">
+						<img class="img_scaled" src="{{STATIC_URL}}assets/icons/edit.svg" />
+					</div>	
+					<div class="dashboard_profile_editor">
+						<div class="dashboard_profile_editor_cover">
+							<input class="dashboard_profile_editor_cover_upload" type="file" />
+							<div class="dashboard_profile_editor_cover_guide">Add a Photo</div>
+							<div class="dashboard_profile_editor_cover_preview"><img class="img_scaled" style="display: none;" /></div>
+						</div>
+						<div class="dashboard_profile_editor_item dashboard_profile_editor_company">
+							<div class="dashboard_profile_editor_item_label">Company</div>
+							<div class="dashboard_profile_editor_item_arrow"></div>
+							<input class="dashboard_profile_editor_item_input" data-original="{{company.company_name}}" value="{{company.company_name}}" />
+						</div>
+						<div class="dashboard_profile_editor_item dashboard_profile_editor_foundedyear">
+							<div class="dashboard_profile_editor_item_label">Founded Year</div>
+							<div class="dashboard_profile_editor_item_arrow"></div>
+							<input class="dashboard_profile_editor_item_input" data-original="{{company.company_founded_year}}" value="{{company.company_founded_year}}" />
+						</div>
+						<div class="dashboard_profile_editor_item dashboard_profile_editor_description">
+							<div class="dashboard_profile_editor_item_label">Description</div>
+							<div class="dashboard_profile_editor_item_arrow"></div>
+							<textarea class="dashboard_profile_editor_item_input dashboard_profile_editor_item_textarea" data-original="{{company.company_description}}">{{company.company_description}}</textarea>
+						</div>
+						<div class="dashboard_profile_editor_item dashboard_profile_editor_tags">
+							<div class="dashboard_profile_editor_item_label">Tags</div>
+							<div class="dashboard_profile_editor_item_arrow"></div>
+							<form class="dashboard_profile_editor_item_addtag">
+								<input class="dashboard_profile_editor_item_input custom_placeholder" value="Add a Tag" />
+							</form>
+							<div class="dashboard_profile_editor_list" data-original="{{company.get_tags_as_string}}" data-items="{{company.get_tags_as_string}}">
+								{% for tag in company.get_tags_as_list %}
+									<div class="dashboard_profile_editor_listitem">{{tag.companytag_tag}}</div>
+								{% endfor %}
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="dashboard_profile_editor_toolbox">
+							<div class="dashboard_profile_editor_submit button" data-type="Description">Done</div>
+							<div class="dashboard_profile_editor_cancel button" data-type="Description">Cancel</div>
+						</div>
+					</div>
+				{% endif %}
+				
+				<div class="dashboard_profile_box_entry">
+					<div class="dashboard_profile_box_cover">
+						<div class="dashboard_profile_box_overlay"></div>
+						<img class="img_scaled" src="{{company.get_company_image_url}}" />
+						<div class="dashboard_profile_box_thumbnail"><img class="img_scaled" src="{{STATIC_URL}}assets/thumbnails/ego.png" /></div>
+					</div>
+					<div class="dashboard_profile_box_contents">
+						<div class="dashboard_profile_box_header dashboard_profile_box_company">{{company.company_name}}</div>
+						<div class="dashboard_profile_box_subheader dashboard_profile_box_catchphrase">{{copmany.company_catchphrase}}</div>
+						<div class="dashboard_profile_box_subheader dashboard_profile_box_foundedyear">{{company.company_founded_year}}</div>
+						<div class="dashboard_profile_box_divider"></div>
+						<div class="dashboard_profile_box_description">{{company.company_description}}</div>
+						<div class="dashboard_profile_box_list dashboard_profile_box_tags">
+							<div class="dashboard_profile_box_list_header">Tags</div>
+							{% for tag in company.get_tags_as_list %}
+								<div class="dashboard_profile_box_list_item">{{tag.companytag_tag}}</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #edeae5;">
+				<div class="dashboard_profile_header">Demo</div>
+			{% if c_editable %}	
+				<!--if comany has a demo --> 
+				{% if company.company_demo != None %}
+					<div id="dashboard_demo_edit">Edit</div>
+				{% else %}
+					<!--else case-->
+					<div id="dashboard_demo_edit" style="display: none;">Edit</div>
+					<div id="dashboard_profile_addbox_demo" class="dashboard_profile_addbox">
+						<div class="dashboard_profile_addbox_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/demo.svg" /></div>
+						<div class="dashboard_profile_addbox_text">Add a Demo</div>
+					</div>
+				{% endif %}
+				
+				<div id="dashboard_demo_editor">
+					<div id="dashboard_demo_editor_caption">Please add an embed url to your YouTube video.</div>
+					<div id="dashboard_demo_editor_caption_example">ex.) http://www.youtube.com/embed/G2CpulLWeyo</div>
+					<div id="dashboard_demo_editor_contents">
+						<div id="dashboard_demo_editor_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/demo.svg" /></div>
+						<input id="dashboard_demo_editor_input" data-original="{{company.company_demo}}" value="{{company.company_demo}}" />
+					</div>
+					
+					<!--IF THE COMPANY HAS A DEMO, make data-state="update" for dashboard_demo_editor_cancel
+					OTHERWISE, make data-state="new"-->
+					
+					<div id="dashboard_demo_editor_toolbox">
+						<div id="dashboard_demo_editor_submit">Submit</div>
+						<div id="dashboard_demo_editor_cancel" {% if company.company_demo != None %} data-state="update" {% else %} data-state="new"{% endif %}>Cancel</div>
+					</div>
+				</div>
+			{% endif %}
+			
+			<div class="dashboard_demo_box">
+				<!--IF THE COMPANY HAS A DEMO:-->
+				<!--{{STATIC_URL}}company/company_demo-->
+				{% if company.company_demo != None %} 
+					<iframe width="560" height="315" src="{{company.company_demo}}" frameborder="0" allowfullscreen></iframe>
+				{% endif %}
+			</div>
+			
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #f7f5f2;">
+			<div class="dashboard_profile_header">Canvas</div>
+			<div id="dashboard_demo_canvas_caption">Click on an item on the canvas to read more</div>
+
+			<div id="dashboard_demo_canvas">
+				<div  class="dashboard_demo_canvas_item dashboard_demo_customer">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Customer Segments</div>
+						{% if c_editable %}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="customer" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 239px;">
+					<ul>
+						<!--for each canvas item in canvas -->
+						{% for customer in canvas_customer%}
+							<li class="dashboard_demo_canvas_contents_item">{{customer.companycanvas_item}}</li>
+						{%endfor%}
+
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_relationship">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Customer Relationships</div>
+						<!-- IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+						
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="relationship" value="Add an item" />
+								</form>
+							</div>
+						{% endif %}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 79px;">
+					<ul>
+						<!--canvas for relation-->
+						{%for relation in canvas_relationship%}
+							<li class="dashboard_demo_canvas_contents_item">{{relation.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_channel">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Channel</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="channel" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 92px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_CHANNEL]] IN [[CANVAS_CHANNEL LIST]]:-->
+						{%for channel in canvas_channel%}
+							<li class="dashboard_demo_canvas_contents_item">{{channel.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_value">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Value Proposition</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="value" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 239px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_VALUE]] IN [[CANVAS_VALUE LIST]]:-->
+						{%for value in canvas_value%}
+							<li class="dashboard_demo_canvas_contents_item">{{value.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_activities">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Key Activities</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="activity" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 92px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_ACTIVITY]] IN [[CANVAS_ACTIVITY LIST]]:-->
+						{%for activity in canvas_activity%}
+							<li class="dashboard_demo_canvas_contents_item">{{activity.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_resources">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Key Resources</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="resource" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 92px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_RESOURCE]] IN [[CANVAS_RESOURCE LIST]]:-->
+						{%for resource in canvas_resource%}
+							<li class="dashboard_demo_canvas_contents_item">{{resource.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_partners">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Key Partners</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="partner" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 252px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_PARTNER]] IN [[CANVAS_PARTNER LIST]]:-->
+						{%for partner in canvas_partner%}
+							<li class="dashboard_demo_canvas_contents_item">{{partner.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_cost">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Cost Structure</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="cost" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 107px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_COST]] IN [[CANVAS_COST LIST]]:-->
+						{%for cost in canvas_costs%}
+							<li class="dashboard_demo_canvas_contents_item">{{cost.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+				<div  class="dashboard_demo_canvas_item dashboard_demo_revenue">
+					<div class="dashboard_demo_canvas_item_close">x</div>
+					<div class="dashboard_demo_canvas_header">
+						<div class="dashboard_demo_canvas_header_text">Revenue Streams</div>
+						<!--IF SESSIONID == PROFILEID:-->
+						{% if u_logged_in == company.company_creator%}
+							<div class="dashboard_demo_canvas_additem">
+								<div class="dashboard_demo_canvas_additem_arrow"></div>
+								<div class="dashboard_demo_canvas_additem_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/add.svg" /></div>
+								<form class="dashboard_demo_canvas_additem_form">
+									<input class="dashboard_demo_canvas_additem_input custom_placeholder" data-type="revenue" value="Add an item" />
+								</form>
+							</div>
+						{%endif%}
+						<div class="clear"></div>
+					</div>
+					<div class="dashboard_demo_canvas_contents" style="height: 107px;">
+					<ul>
+						
+						<!--FOR EACH [[CANVAS_REVENUE]] IN [[CANVAS_REVENUE LIST]]:-->
+						{%for revenue in canvas_revenue%}
+							<li class="dashboard_demo_canvas_contents_item">{{revenue.companycanvas_item}}</li>
+						{%endfor%}
+						
+					</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #edeae5;">
+			<div class="dashboard_profile_header">Team</div>
+			{%for member in company.get_members_as_list%}
+				{%include "components/profile_team.html"%}
+			{%endfor%}
+			
+			{%if c_editable%}
+				<div id="dashboard_profile_addbox_team" class="dashboard_profile_addbox">
+					<div class="dashboard_profile_addbox_icon"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/user.svg" /></div>
+					<div class="dashboard_profile_addbox_text">Add a Team Member</div>
+				</div>
+			{%endif%}
+			
+		</div>
+		<div class="dashboard_profile_item" style="background-color: #857c78;">
+			<div class="dashboard_profile_header dashboard_profile_header_personal" style="margin-bottom: 15px;">Contact</div>
+			
+			<!--IF SESSIONDATA == PROFILEID:-->
+			{% if c_editable%}
+				<div class="dashboard_profile_contacts_edit">Edit</div>
+				<div class="dashboard_profile_editor_contacts" style="display: none;">
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_website">
+						<div class="dashboard_profile_editor_item_label_contacts">Website</div>
+						<input class="dashboard_profile_editor_item_input_contacts" placeholder="Enter your Website URL" {% if company.company_website %} data-original="{{company.company_website}}" value="{{company.company_website}}" {% else %} data-original="" value="" {% endif %}/>
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_facebook">
+						<div class="dashboard_profile_editor_item_label_contacts">Facebook</div>
+						<input class="dashboard_profile_editor_item_input_contacts" placeholder="Enter your Facebook URL" {% if company.company_facebook %} data-original="{{company.company_facebook}}" value="{{company.company_facebook}}" {% else %} data-original="" value="" {% endif %} />
+					</div>
+					<div class="dashboard_profile_editor_item dashboard_profile_editor_email">
+						<div class="dashboard_profile_editor_item_label_contacts">Email</div>
+						<input class="dashboard_profile_editor_item_input_contacts" placeholder="Enter your Email" {% if company.company_email %} data-original="{{company.company_email}}" value="{{company.company_email}}" {% else %} data-original="" value="" {% endif %} />
+					</div>
+					<div class="dashboard_profile_editor_toolbox">
+						<div class="dashboard_profile_editor_submit" data-type="Contacts">Done</div>
+						<div class="dashboard_profile_editor_cancel" data-type="Contacts">Cancel</div>
+					</div>
+				</div>
+			{%endif%}
+			
+			
+			<div class="dashboard_profile_contacts">
+				{% if company.company_website %}
+					<a href="{{company.company_website}}" id="dashboard_profile_contacts_website" target="_blank">
+						<div class="dashboard_profile_contacts_item">
+							<div class="dashboard_profile_contacts_item_caption">Website</div>
+						</div>
+					</a>
+				{% endif %}
+				
+				{% if company.company_facebook %}
+					<a href="{{company.company_facebook}}" id="dashboard_profile_contacts_facebook" target="_blank">
+						<div class="dashboard_profile_contacts_item">
+							<div class="dashboard_profile_contacts_item_caption">Facebook</div>
+						</div>
+					</a>
+				{% endif %}
+
+				{% if company.company_email %}
+					<a href="mailto:{{company.company_email}}" id="dashboard_profile_contacts_email">
+						<div class="dashboard_profile_contacts_item">
+							<div class="dashboard_profile_contacts_item_caption">Email</div>
+						</div>
+					</a>
+				{% else %}
+					<a href="mailto:{{company.company_creator.email}}" id="dashboard_profile_contacts_email">
+						<div class="dashboard_profile_contacts_item">
+							<div class="dashboard_profile_contacts_item_caption">Email</div>
+						</div>
+					</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

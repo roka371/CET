@@ -1,0 +1,30 @@
+<tr class="cetapp_table_row" id="app_{{certificate.id}}">
+	<td class="cetapp_table_cell">{{certificate.student_id}}</td>
+	<td class="cetapp_table_cell">{{certificate.student_first_name}} {{certificate.student_last_name}}</td>
+	<td class="cetapp_table_cell">
+		{% if certificate.student_approved %}
+			<div class="cetapp_status cetapp_status_check"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/check.svg" /></div>
+		{% else %}
+			<div class="cetapp_status cetapp_status_unchecked"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/unchecked.svg" /></div>
+		{% endif %}
+	</td>
+	<td class="cetapp_table_cell"><a href="mailto:{{certificate.student_email}}"><div class="cetapp_send_email"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/mail.svg" /></div></a></td>
+	<td class="cetapp_table_cell">{{certificate.student_phone_number}}</td>
+	<td class="cetapp_table_cell">{% if certificate.student_is_mailed %}Mailed{% else %}Pickup From CET{% endif %}</td>
+	<td class="cetapp_table_cell">
+		{% for course in certificate.get_courses_as_list %}
+			<div class="cetapp_coursework_item">{{course}}</div>
+		{% endfor %}
+	</td>
+	<td class="cetapp_table_cell">{{certificate.student_major}}</td>
+	<td class="cetapp_table_cell">{{certificate.student_address_line_1}}</td>
+	<td class="cetapp_table_cell">
+		{% if certificate.student_comments %}
+		<div class="cetapp_view_content"><img class="img_scaled" src="{{STATIC_URL}}assets/icons/eye.svg" /></div>
+		<div class="cetapp_comment_popover">
+			<div class="cetapp_comment_popover_arrow"></div>
+			<div class="cetapp_comment_popover_content">{{certificate.student_comments}}</div>
+		</div>
+		{% endif %}
+	</td>
+</tr>

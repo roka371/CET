@@ -1,0 +1,11 @@
+t = template.Template("""
+	<ul>
+		{% for item in item_list %}
+			<li>{{ item.education_school }}</li>
+		{% endfor %}
+	</ul>
+""")
+
+c = template.Context({'item_list':u_educations})
+
+return HttpResponse(t.render(c))
